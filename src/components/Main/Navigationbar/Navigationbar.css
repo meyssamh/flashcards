@@ -1,0 +1,49 @@
+.Topnav {
+    max-height: 7.6vh;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: black;
+    color: white;
+    position: sticky;
+    top: 0;
+}
+
+.Topnav li {
+    display: inline-block;
+    text-align: center;
+}
+
+.Left {
+    float: left;
+    padding: 14px 16px;
+    border-right: 1px solid grey;
+    cursor: default;
+}
+
+.Right {
+    float: right;
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
+    padding: 14px 16px;
+    cursor: default;
+}
+
+.Setting {
+    float: right;
+    padding: 14px 16px;
+    color: white;
+    cursor: pointer;
+}
+
+.Topnav .Setting:hover {
+    transform: rotate(36000deg);
+    transition-duration: 500s;
+    transition-timing-function: linear;
+}
+
+/* @media screen and (max-width: 600px){
+    .Topnav li.right, 
+    .Topnav li {float: none;}
+} */

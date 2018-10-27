@@ -12,18 +12,18 @@ const Course = (props) => {
     return(
         <Fragment>
             <div className={classes.Course}>
-                <p className={classes.Text}>
+                <p className={classes.Name}>
                 {props.children}
-                dope
+                Java
                 </p>
-                {/* <p className={classes.Text}>
+                <p className={classes.Group}>
                 {props.children}
-                dope
+                IT
                 </p>
-                <p className={classes.Text}>
+                <p className={classes.Count}>
                 {props.children}
-                dope
-                </p> */}
+                17 Cards
+                </p>
                 <ul>
                     <li className={classes.ButtonEdit}>
                         {edit}

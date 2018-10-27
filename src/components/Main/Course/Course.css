@@ -1,9 +1,9 @@
 .Course {
-    width: 350px;
-    height: 150px;
+    width: 22vw;
+    height: 20vh;
     margin-top: 30px;
-    margin-left: 30px;
-    font-size: 1.5rem;
+    margin-left: 1.7vw;
+    font-size: 1.7rem;
     padding: 20px;
     background-color: #f2f2f2;
     color: black;
@@ -14,11 +14,21 @@
     position: relative;
 }
 
-.Text {
+.Name {
     margin: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.Group {
+    font-size: 1rem;
+    color: darkgrey;
+}
+
+.Count {
+    font-size: 0.7rem;
+    color: darkgrey;
 }
 
 .ButtonEdit {

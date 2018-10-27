@@ -1,0 +1,42 @@
+.Left {
+    list-style-type: none;
+    float: left;
+    margin: 0px;
+    padding: 0;
+    width: 18vw;
+    height: 92.4vh;
+    background-color: rgb(100, 116, 129);
+    cursor: default;
+    position: sticky;
+    top: 7.6vh;
+}
+
+.Courses {
+    text-align: center;
+    color: rgb(196, 201, 209);
+    border-bottom: 1px solid white;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 25px 16px;
+}
+
+.Course {
+    text-align: center;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: rgb(211, 216, 224);
+    font-size: 18px;
+    padding: 15px 16px;
+    text-decoration: none;
+}
+
+li a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+li a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}

@@ -1,14 +1,17 @@
 import React, {Fragment} from 'react';
 
-import classes from './Bars.css';
+// import classes from './Bars.css';
+import Navigationbar from './Navigationbar/Navigationbar';
+import Sidebar from './Sidebar/Sidebar';
 
 // Toolbars and side Drawer will be built here!
 const Bars = (props) => (
     <Fragment>
-        <div>Toolbar, SideDrawer</div>
-        <main className={classes.Content}>
+        <Navigationbar />
+        <Sidebar />
+        {/* <main className={classes.Content}>
             {props.children}
-        </main>
+        </main> */}
     </Fragment>
 );
 
