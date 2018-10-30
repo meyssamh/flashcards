@@ -1,8 +1,7 @@
 .Topnav {
     max-height: 7.6vh;
+    width: 18vw;
     list-style-type: none;
-    margin: 0;
-    padding: 0;
     overflow: hidden;
     background-color: black;
     color: white;
@@ -10,23 +9,19 @@
     top: 0;
 }
 
-.Topnav li {
-    display: inline-block;
-    text-align: center;
-}
-
 .Left {
+    width: 10.8vw;
     float: left;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
     padding: 14px 16px;
-    border-right: 1px solid grey;
     cursor: default;
 }
 
-.Right {
-    float: right;
+.Border {
     border-left: 1px solid grey;
-    border-right: 1px solid grey;
-    padding: 14px 16px;
+    float: right;
     cursor: default;
 }
 

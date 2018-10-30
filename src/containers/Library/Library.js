@@ -1,17 +1,17 @@
 import React, {Component, Fragment} from 'react';
 
-import Navigationbar from '../../components/Main/Navigationbar/Navigationbar';
-import Sidebar from '../../components/Main/Sidebar/Sidebar';
-import Course from '../../components/Main/Course/Course';
+import Sidebar from '../../components/Library/Sidebar/Sidebar';
+import Course from '../../components/Library/Course/Course';
+import classes from './Library.css';
 
 class Main extends Component {
     render() { 
         return ( 
             <Fragment>
-                <Navigationbar />
-                <div className={Main}>
+                <div>
                     <Sidebar />
-                    <div className={Main}>
+                </div>
+                <div className={classes.Groupe}>
                     <Course />
                     <Course />
                     <Course />
@@ -20,8 +20,6 @@ class Main extends Component {
                     <Course />
                     <Course />
                     <Course />
-                    <Course />
-                    </div>
                 </div>
             </Fragment>
         );

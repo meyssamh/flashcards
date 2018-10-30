@@ -9,20 +9,17 @@ const Navigationbar = (props) => {
     const setting = <FontAwesomeIcon icon={faCog} />;
 
     return (
-        <ul className={classes.Topnav}>
-            <li className={classes.Left}>
-                Logo!
-            </li>
-            <li className={classes.Setting} onClick={props.clicked}>
-                <div>
-                    {setting}
-                </div>
-            </li>
-            <li className={classes.Right} >
+        <div className={classes.Topnav}>
+            <div className={classes.Left} >
                 {props.username}
                 Username
-            </li>
-        </ul>
+            </div>
+            <div className={classes.Border}>
+                <div className={classes.Setting} onClick={props.clicked}>
+                    {setting}
+                </div>
+            </div>
+        </div>
     );
 }
  

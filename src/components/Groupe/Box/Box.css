@@ -1,0 +1,83 @@
+.Box0 {
+    width: 50px;
+    height: 42px;
+    background-color: red;
+    color: black;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 5px;
+    padding-top: 8px;
+}
+
+.Box1 {
+    width: 50px;
+    height: 42px;
+    background-color: tomato;
+    color: blue;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 5px;
+    padding-top: 8px;
+}
+
+.Box2 {
+    width: 50px;
+    height: 42px;
+    background-color: cyan;
+    color: rosybrown;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 5px;
+    padding-top: 8px;
+}
+
+.Box3 {
+    width: 50px;
+    height: 42px;
+    background-color: lightsalmon;
+    color: darkgrey;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 5px;
+    padding-top: 8px;
+}
+
+.Box4 {
+    width: 50px;
+    height: 42px;
+    background-color: darkseagreen;
+    color: black;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 5px;
+    padding-top: 8px;
+}
+
+.Box5 {
+    width: 50px;
+    height: 42px;
+    background-color: lightblue;
+    color: grey;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 5px;
+    padding-top: 8px;
+}
+
+.Fav {
+    width: 50px;
+    height: 42px;
+    background-color: white;
+    color: gold;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 5px;
+    padding-top: 8px;
+}

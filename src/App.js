@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 
-// import Bars from './components/Main/Bars/Bars';
-import Main from './containers/Main/Main';
+// import Library from './containers/Library/Library';
+import Groupe from './containers/Groupe/Groupe';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <Main />
+        {/* <Library /> */}
+        <Groupe />
       </div>
     );
   }
