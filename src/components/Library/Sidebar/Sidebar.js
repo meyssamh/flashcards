@@ -32,21 +32,6 @@ const Sidebar = (props) => {
                 </ul>
                 <div className={classes.Add}>{add}&nbsp;&nbsp;&nbsp;Add Course</div>
             </div>
-            
-            
-            {/* <ul className={classes.Left}>
-                <li>
-                    <ul className={classes.Left}>
-                        
-                        <li className={classes.Course}>IT</li>
-                        <li className={classes.Course}>Wirtschaft</li>
-                        <li className={classes.Course}>Maschinenbau</li>
-                        {props.course}
-                    </ul>
-                </li>
-                <li className={classes.Add}>{add}  Add Course</li>
-            </ul> */}
-            
         </Fragment>
     );
 }

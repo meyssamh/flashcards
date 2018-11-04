@@ -1,11 +1,9 @@
 .Placeholder {
     height: 25px;
-    width: 50vw;
     color: white;
     background-color: #f1f1f1;
     border-radius: 25px;
     padding: 10px;
-    margin: 40px 0 20px 0;
     position: relative;
 }
 
@@ -17,4 +15,11 @@
     display: block;
     position: relative;
     overflow: hidden;
+}
+
+.Percent {
+    color: black;
+    text-align: center;
+    padding-top: 20px;
+    font-weight: bold;
 }

@@ -6,8 +6,10 @@
     text-align: center;
     font-size: 24px;
     font-weight: bold;
-    border-radius: 5px;
+    border-radius: 50px;
     padding-top: 8px;
+    margin-left: 8px;
+    cursor: pointer;
 }
 
 .Box1 {
@@ -18,8 +20,10 @@
     text-align: center;
     font-size: 24px;
     font-weight: bold;
-    border-radius: 5px;
+    border-radius: 50px;
     padding-top: 8px;
+    margin-left: 8px;
+    cursor: pointer;
 }
 
 .Box2 {
@@ -30,8 +34,10 @@
     text-align: center;
     font-size: 24px;
     font-weight: bold;
-    border-radius: 5px;
+    border-radius: 50px;
     padding-top: 8px;
+    margin-left: 8px;
+    cursor: pointer;
 }
 
 .Box3 {
@@ -42,8 +48,10 @@
     text-align: center;
     font-size: 24px;
     font-weight: bold;
-    border-radius: 5px;
+    border-radius: 50px;
     padding-top: 8px;
+    margin-left: 8px;
+    cursor: pointer;
 }
 
 .Box4 {
@@ -54,8 +62,10 @@
     text-align: center;
     font-size: 24px;
     font-weight: bold;
-    border-radius: 5px;
+    border-radius: 50px;
     padding-top: 8px;
+    margin-left: 8px;
+    cursor: pointer;
 }
 
 .Box5 {
@@ -66,18 +76,22 @@
     text-align: center;
     font-size: 24px;
     font-weight: bold;
-    border-radius: 5px;
+    border-radius: 50px;
     padding-top: 8px;
+    margin-left: 8px;
+    cursor: pointer;
 }
 
 .Fav {
     width: 50px;
     height: 42px;
-    background-color: white;
+    background-color: rgb(146, 146, 146);
     color: gold;
     text-align: center;
     font-size: 24px;
     font-weight: bold;
-    border-radius: 5px;
+    border-radius: 50px;
     padding-top: 8px;
+    margin-left: 8px;
+    cursor: pointer;
 }

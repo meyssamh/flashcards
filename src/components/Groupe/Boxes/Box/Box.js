@@ -54,7 +54,7 @@ export const Box5 = (props) => {
 
 export const Fav = (props) => {
 
-    const start = <FontAwesomeIcon icon={faStar} />
+    const star = <FontAwesomeIcon icon={faStar} />
 
     return (
         <div className={classes.Fav} onClick={props.clicked}>

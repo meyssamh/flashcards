@@ -1,0 +1,18 @@
+.Boxes {
+    width: 500px;
+    height: 72px;
+    display: table;
+}
+
+.Box {
+    display: table-cell;
+    padding-left: 20px;
+    padding-top: 20px;
+}
+
+.Text {
+    text-align: center;
+    margin-top: 10px;
+    padding-left: 25px;
+    cursor: default;
+}

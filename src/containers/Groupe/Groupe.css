@@ -1,6 +1,43 @@
 .Groupe {
-    background-color: rgb(17, 41, 41);
+    background-color: rgb(207, 207, 207);
     color: #eee;
-    width: 100vw;
     height: 100vh;
+    position: fixed;
+}
+
+.Box {
+    width: 683px;
+    height: 300px;
+    border: 1px solid grey;
+    background-color: #707070;
+    margin: 75px 341.5px;
+}
+
+.Progress {
+    margin: 40px;
+}
+
+.Text {
+    font-size: 60px;
+    color: #79635c;
+    text-align: center;
+    padding-top: 40px;
+}
+
+.Boxes {
+    margin: 20px 50px;
+}
+
+.Btn {
+    background-color: lightsalmon;
+    color: white;
+    top: 5px;
+    position: fixed;
+    width: 40px;
+    height: 30px;
+    text-align: center;
+    padding-top: 8px;
+    margin: 30px 45px;
+    border-radius: 50px;
+    cursor: pointer;
 }
