@@ -1,15 +1,12 @@
 .Course {
-    width: 22vw;
+    width: 21vw;
     height: 20vh;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    margin-left: 2vw;
+    margin: 2vh 0 2vh 2.6vw;
     font-size: 1.7rem;
     padding: 20px;
-    background-color: #f2f2f2;
-    color: black;
-    box-shadow: 3px 3px #d3d1d1;
-    border-radius: 8px;
+    background-color: #f5deb3;
+    box-shadow: 0px 0px 10px #685f74;
+    border-radius: 3px;
     display: inline-block;
     cursor: pointer;
     position: relative;
@@ -17,6 +14,7 @@
 
 .Name {
     margin: 0;
+    color: #685f74;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -24,19 +22,20 @@
 
 .Group {
     font-size: 1rem;
-    color: darkgrey;
+    color: #9c94a7;
 }
 
 .Count {
     font-size: 0.7rem;
-    color: darkgrey;
+    color: #9c94a7;
 }
 
 .ButtonEdit {
     width: 21px;
+    height: 21px;
     font-size: 18px;
     border: none;
-    color: #9b9b9b;
+    color: #9c94a7;
     padding: 10px;
     text-align: center;
     text-decoration: none;
@@ -49,9 +48,10 @@
 
 .ButtonDelete {
     width: 21px;
+    height: 21px;
     font-size: 18px;
     border: none;
-    color: #9b9b9b;
+    color: #9c94a7;
     padding: 10px;
     text-align: center;
     text-decoration: none;
@@ -62,10 +62,14 @@
     right: 10px;
 }
 
-.ButtonEdit :hover{
-    color: #333333;
+.ButtonEdit:hover{
+    color: #685f74;
+    background-color: #ffbf89;
+    border-radius: 10px;
 }
 
-.ButtonDelete :hover{
-    color: #333333;
+.ButtonDelete:hover{
+    color: #dd4b4f;
+    background-color: #ffbf89;
+    border-radius: 10px;
 }

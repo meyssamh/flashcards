@@ -3,11 +3,11 @@
     margin: 0;
     padding: 0;
     width: 18vw;
-    height: 92.4vh;
-    background-color: rgb(80, 80, 255);
+    height: 93vh;
+    background-color: #eae1d7;
     cursor: default;
     position: fixed;
-    top: 7.6vh;
+    top: 7vh;
 }
 
 .Left {
@@ -15,34 +15,11 @@
     margin: 0;
     padding: 0;
     width: 18vw;
-    height: 85vh;
+    height: 70vh;
     cursor: default;
     position: fixed;
-    top: 20vh;
-}
-
-.Nav {
-    background-color: rgb(0, 0, 0);
-    list-style-type: none;
-    float: left;
-    top: 0;
-    height: 7.6vh;
-    width: 18vw;
-    margin: 0;
-    padding: 0;
-    position: fixed;
-}
-
-.User {
-    width: 10.8vw;
-    float: left;
-    white-space: nowrap; 
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: white;
-    padding: 14px 16px;
-    margin: 0;
-    cursor: default;
+    top: 18.2vh;
+    overflow-y: auto;
 }
 
 .Border {
@@ -51,54 +28,37 @@
     cursor: default;
 }
 
-.Setting {
-    float: right;
-    padding: 14px 16px;
-    color: white;
-    cursor: pointer;
-}
-
-.Setting:hover {
-    transform: rotate(36000deg);
-    transition-duration: 500s;
-    transition-timing-function: linear;
-}
-
 .Courses {
     text-align: center;
-    color: rgb(196, 201, 209);
-    background-color: rgb(80, 80, 255);
+    color: #685f74;
     border-bottom: 1px solid white;
     font-weight: bold;
     font-size: 20px;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
     padding: 25px 16px;
 }
 
-.Course {
+.Add {
+    background-color: #eae1d7;
+    color:#685f74;
+    bottom: 3vh;
+    left: 3.4vw;
+    position: fixed;
+    width: 11vw;
+    height: 6vh;
+    text-decoration: none;
+    font-size: 16px;
     text-align: center;
     white-space: nowrap; 
     overflow: hidden;
     text-overflow: ellipsis;
-    color: rgb(211, 216, 224);
-    background-color: rgb(80, 80, 255);
-    font-size: 18px;
-    padding: 15px 16px;
-    text-decoration: none;
+    border: 0px;
+    padding: 0;
     cursor: pointer;
 }
 
-.Add {
-    background-color: lightskyblue;
-    color: white;
-    bottom: 5px;
-    position: fixed;
-    width: 150px;
-    height: 35px;
-    text-decoration: none;
-    font-size: 16px;
-    text-align: center;
-    padding-top: 10px;
-    margin: 10px 45px;
-    border-radius: 10px;
-    cursor: pointer;
+.Add:hover {
+    background-color: #ffbf89;
 }

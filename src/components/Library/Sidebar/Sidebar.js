@@ -1,39 +1,23 @@
-import React, {Fragment} from 'react';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCog, faPlus} from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import classes from './Sidebar.css';
+import Courses from './Courses/Courses';
 
 const Sidebar = (props) => {
 
-    const setting = <FontAwesomeIcon icon={faCog} />;
     const add = <FontAwesomeIcon icon={faPlus} />;
 
     return (
-        <Fragment>
-            <ul className={classes.Nav}>
-                    <li className={classes.User} >
-                        {props.username}
-                        Username
-                    </li>
-                    <li className={classes.Border}>
-                        <div className={classes.Setting} onClick={props.clicked}>
-                            {setting}
-                        </div>
-                    </li>
+        <div className={classes.Side}>
+            <div className={classes.Courses}>Courses</div>
+            <ul className={classes.Left}>
+                <Courses course={props.course} />
             </ul>
-            <div className={classes.Side}>
-                <div className={classes.Courses}>Courses</div>
-                <ul className={classes.Left}>        
-                    <li className={classes.Course}>IT</li>
-                    <li className={classes.Course}>Wirtschaft</li>
-                    <li className={classes.Course}>Maschinenbau</li>
-                    {props.course}
-                </ul>
-                <div className={classes.Add}>{add}&nbsp;&nbsp;&nbsp;Add Course</div>
-            </div>
-        </Fragment>
+            <button className={classes.Add} onClick={props.clickedAddCourse}>{add}&nbsp;&nbsp;&nbsp;Add Course</button>
+        </div>
     );
 }
- 
+
 export default Sidebar;

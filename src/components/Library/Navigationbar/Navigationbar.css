@@ -1,11 +1,11 @@
 .Topnav {
-    max-height: 7.6vh;
-    width: 18vw;
+    height: 7vh;
+    width: 100vw;
     list-style-type: none;
     overflow: hidden;
-    background-color: black;
+    background-color: #ce874e;
     color: white;
-    position: sticky;
+    position: fixed;
     top: 0;
 }
 
@@ -20,20 +20,22 @@
 }
 
 .Border {
-    border-left: 1px solid grey;
+    border-left: 1px solid white;
     float: right;
     cursor: default;
 }
 
 .Setting {
+    width: 16px;
+    height: 16px;
     float: right;
-    padding: 14px 16px;
+    padding: 16px 16px;
     color: white;
     cursor: pointer;
 }
 
-.Topnav .Setting:hover {
-    transform: rotate(36000deg);
+.Setting:hover {
+    transform: rotateZ(36000deg);
     transition-duration: 500s;
     transition-timing-function: linear;
 }

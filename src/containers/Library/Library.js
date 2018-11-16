@@ -1,29 +1,47 @@
-import React, {Component, Fragment} from 'react';
+import React, { Component, Fragment } from 'react';
 
+import Navigationbar from '../../components/Library/Navigationbar/Navigationbar';
 import Sidebar from '../../components/Library/Sidebar/Sidebar';
-import Course from '../../components/Library/Course/Course';
+import Groupe from '../../components/Library/Groupe/Groupe';
 import classes from './Library.css';
 
-class Main extends Component {
-    render() { 
-        return ( 
+class Library extends Component {
+    state = {}
+
+    settingsToggleHandler = () => {
+        // Toggle for Setting in Navigationbar
+    }
+
+    courseAddHandler = () => {
+        // Add Course to Sidebar
+    }
+
+    openGroupeHandler = () => {
+        // Open Groupe (window.push or window.location)
+    }
+
+    editGroupeHandler = () => {
+        // Edit Groupe
+    }
+
+    deleteGroupeHandler = () => {
+        // Delete Groupe
+    }
+
+    render() {
+
+        return (
             <Fragment>
-                <div>
-                    <Sidebar />
-                </div>
+                <Navigationbar username={'Username'} clickedSettings={this.settingsToggleHandler} />
+                <Sidebar course={'Coursename'} clickedAddCourse={this.courseAddHandler} />
                 <div className={classes.Groupe}>
-                    <Course />
-                    <Course />
-                    <Course />
-                    <Course />
-                    <Course />
-                    <Course />
-                    <Course />
-                    <Course />
+                    <Groupe clickedOpenGroupe={this.openGroupeHandler} groupe={'Groupe'} course={'Coursename'}
+                        count={'count'} clickedEdit={this.editGroupeHandler} clickedDelete={this.deleteGroupeHandler}
+                    />
                 </div>
             </Fragment>
         );
     }
 }
- 
-export default Main;
+
+export default Library;

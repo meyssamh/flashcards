@@ -1,0 +1,19 @@
+.Course {
+    text-align: center;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #685f74;
+    font-size: 18px;
+    padding: 15px 16px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.Course:hover {
+    background-color: #ffbf89;
+}
+
+.Course:active {
+    background-color: #8bd0b4;
+}

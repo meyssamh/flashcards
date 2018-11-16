@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Box0, Box1, Box2, Box3, Box4, Box5, Fav} from './Box/Box';
+import { Box0, Box1, Box2, Box3, Box4, Box5, Fav } from './Box/Box';
 import classes from './Boxes.css';
 
 const Boxes = (props) => {
@@ -8,28 +8,28 @@ const Boxes = (props) => {
         <table className={classes.Boxes}>
             <tbody>
                 <tr>
-                    <td className={classes.Box}><Box0 /></td>
-                    <td className={classes.Box}><Box1 /></td>
-                    <td className={classes.Box}><Box2 /></td>
-                    <td className={classes.Box}><Box3 /></td>
-                    <td className={classes.Box}><Box4 /></td>
-                    <td className={classes.Box}><Box5 /></td>
-                    <td className={classes.Box}><Fav /></td>
+                    <td className={classes.Box} clicked={props.clickedBox0}><Box0 /></td>
+                    <td className={classes.Box} clicked={props.clickedBox1}><Box1 /></td>
+                    <td className={classes.Box} clicked={props.clickedBox2}><Box2 /></td>
+                    <td className={classes.Box} clicked={props.clickedBox3}><Box3 /></td>
+                    <td className={classes.Box} clicked={props.clickedBox4}><Box4 /></td>
+                    <td className={classes.Box} clicked={props.clickedBox5}><Box5 /></td>
+                    <td className={classes.Box} clicked={props.clickedFav}><Fav /></td>
                 </tr>
             </tbody>
             <tbody>
                 <tr>
-                    <td className={classes.Text}>17 Cards</td>
-                    <td className={classes.Text}>17 Cards</td>
-                    <td className={classes.Text}>55 Cards</td>
-                    <td className={classes.Text}>0 Cards</td>
-                    <td className={classes.Text}>1000 Cards</td>
-                    <td className={classes.Text}>17 Cards</td>
-                    <td className={classes.Text}>17 Cards</td>
+                    <td className={classes.Text}>{props.countBox0} Cards</td>
+                    <td className={classes.Text}>{props.countBox1} Cards</td>
+                    <td className={classes.Text}>{props.countBox2} Cards</td>
+                    <td className={classes.Text}>{props.countBox3} Cards</td>
+                    <td className={classes.Text}>{props.countBox4} Cards</td>
+                    <td className={classes.Text}>{props.countBox5} Cards</td>
+                    <td className={classes.Text}>{props.countFav} Cards</td>
                 </tr>
             </tbody>
         </table>
     );
 }
- 
+
 export default Boxes;

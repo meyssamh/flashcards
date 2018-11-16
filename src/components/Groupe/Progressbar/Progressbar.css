@@ -2,23 +2,20 @@
     height: 25px;
     color: white;
     background-color: #f1f1f1;
-    border-radius: 25px;
     padding: 10px;
     position: relative;
 }
 
 .Progressbar {
     height: 100%;
-    width: 50%;
-    background-color: #2196F3;
-    border-radius: 25px;
+    background-color: #81dabe;
     display: block;
     position: relative;
     overflow: hidden;
 }
 
 .Percent {
-    color: black;
+    color: white;
     text-align: center;
     padding-top: 20px;
     font-weight: bold;

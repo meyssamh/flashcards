@@ -1,6 +1,8 @@
 .Groupe {
     width: 82vw;
-    height: 100vh;
-    float: right;
+    height: 93vh;
+    position: fixed;
+    right: 0;
+    top: 7vh;
+    overflow-y: auto;
 }
-
