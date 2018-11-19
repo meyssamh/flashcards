@@ -4,7 +4,7 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 import classes from './Card.css';
 
-const Card = (props) => {
+const Card = props => {
 
     const del = <FontAwesomeIcon icon={faTrashAlt} />;
 

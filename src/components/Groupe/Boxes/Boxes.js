@@ -3,7 +3,14 @@ import React from 'react';
 import { Box0, Box1, Box2, Box3, Box4, Box5, Fav } from './Box/Box';
 import classes from './Boxes.css';
 
-const Boxes = (props) => {
+const Boxes = props => {
+
+    const Box = Object.keys(props.cardsCount)
+        .map(box => {
+            return [...Array(props.cardsCount[box])].map(count => {
+                return <td key={box + count} className={classes.Text}>{count} Cards</td>
+            })
+        })
     return (
         <table className={classes.Boxes}>
             <tbody>
@@ -19,13 +26,7 @@ const Boxes = (props) => {
             </tbody>
             <tbody>
                 <tr>
-                    <td className={classes.Text}>{props.countBox0} Cards</td>
-                    <td className={classes.Text}>{props.countBox1} Cards</td>
-                    <td className={classes.Text}>{props.countBox2} Cards</td>
-                    <td className={classes.Text}>{props.countBox3} Cards</td>
-                    <td className={classes.Text}>{props.countBox4} Cards</td>
-                    <td className={classes.Text}>{props.countBox5} Cards</td>
-                    <td className={classes.Text}>{props.countFav} Cards</td>
+                    {Box}
                 </tr>
             </tbody>
         </table>

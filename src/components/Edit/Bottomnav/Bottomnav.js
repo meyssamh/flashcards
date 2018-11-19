@@ -4,7 +4,7 @@ import classes from './Bottomnav.css';
 import Card from './Card/Card';
 import AddCard from './AddCard/AddCard';
 
-const Bottomnav = (props) => {
+const Bottomnav = props => {
     return (
         <div className={classes.Bottomnav}>
             <table>

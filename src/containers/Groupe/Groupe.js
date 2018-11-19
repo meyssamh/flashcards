@@ -7,7 +7,20 @@ import Progressbar from '../../components/Groupe/Progressbar/Progressbar';
 import Boxes from '../../components/Groupe/Boxes/Boxes';
 
 class Groupe extends Component {
-    state = {}
+    state = {
+        Groupename: {
+            1: 'JavaScript'
+        },
+        CardsCount: {
+            0: '17',
+            1: '12',
+            2: '35',
+            3: '0',
+            4: '50',
+            5: '9',
+            6: '7'
+        }
+    }
 
     addCardHandler = () => {
         // Add Card to Groupe
@@ -53,15 +66,13 @@ class Groupe extends Component {
             <div className={classes.Groupe}>
                 <button className={classes.Btn} title={'Add card'} onClick={this.addCardHandler}>{add}</button>
                 <button className={classes.Done} onClick={this.doneHandler}>Done!</button>
-                <div className={classes.Text}>Coursename</div>
+                <div className={classes.Text}>{this.state.Groupename[1]}</div>
                 <div className={classes.Box}>
                     <div className={classes.Boxes}>
                         <Boxes clickedBox0={this.openBox0Handler} clickedBox1={this.openBox1Handler}
                             clickedBox2={this.openBox2Handler} clickedBox3={this.openBox3Handler}
                             clickedBox4={this.openBox4Handler} clickedBox5={this.openBox5Handler}
-                            clickedFav={this.openFavHandler} countBox0={'count!'} countBox1={'count!'}
-                            countBox2={'count!'} countBox3={'count!'} countBox4={'count!'} countBox5={'count!'}
-                            countFav={'count!'} />
+                            clickedFav={this.openFavHandler} cardsCount={this.state.CardsCount} />
                     </div>
                     <div className={classes.Progress}>
                         <Progressbar width={'50%'} percent={'counting the percent!'} />

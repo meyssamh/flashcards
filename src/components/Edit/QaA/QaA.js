@@ -4,7 +4,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import classes from './QaA.css';
 
-const QaA = (props) => {
+const QaA = props => {
 
     const plus = <FontAwesomeIcon icon={faPlus} />
 

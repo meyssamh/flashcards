@@ -1,8 +1,29 @@
 .Groupe {
     width: 82vw;
-    height: 93vh;
+    height: 83vh;
     position: fixed;
     right: 0;
-    top: 7vh;
+    top: 17vh;
     overflow-y: auto;
+}
+
+.Btn {
+    background-color: #eae1d7;
+    color:#685f74;
+    top: 9vh;
+    right: 3.4vw;
+    position: fixed;
+    width: 3vw;
+    height: 6vh;
+    text-decoration: none;
+    font-size: 16px;
+    text-align: center;
+    border: 0px;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
+}
+
+.Btn:hover {
+    background-color: #ffbf89;
 }
