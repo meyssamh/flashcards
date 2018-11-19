@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import swal from 'sweetalert2';
 
 import Navigationbar from '../../components/Library/Navigationbar/Navigationbar';
 import Sidebar from '../../components/Library/Sidebar/Sidebar';
@@ -14,18 +15,19 @@ class Library extends Component {
         },
         Groupe: {
             'IT': {
-                0: 'Java',
-                1: 'JavaScript'
+                'Java': 17,
+                'JavaScript': 15,
+                'C++': 0
             },
             'BWL': {
-                0: 'Marketing',
-                1: 'Steuerlehre',
-                2: 'BWL'
+                'Marketing': 25,
+                'Steuerlehre': 100,
+                'BWL': 76
             },
             'VWL': {
-                0: 'Makro 1',
-                1: 'Makro 2',
-                2: 'VWL'
+                'Makro 1': 55,
+                'Makro 2': 93,
+                'VWL': 80
             }
         }
     }
@@ -34,8 +36,39 @@ class Library extends Component {
         // Toggle for Setting in Navigationbar
     }
 
-    courseAddHandler = () => {
-        // Add Course to Sidebar
+    addCourseHandler = (props) => {
+
+        swal({
+            text: 'Please enter the name of your new course:',
+            input: 'text',
+            inputPlaceholder: 'New Course',
+            showCancelButton: true
+        }).then((result) => {
+            if (result.value) {
+                swal({
+                    type: 'success',
+                    title: 'Done!',
+                    text: 'Your course has been added.',
+                    toast: true,
+                    animation: false,
+                    customClass: 'animated slideInDown',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            } else if (result.value === '') {
+                swal({
+                    title: 'Error!',
+                    type: 'warning',
+                    text: 'Your course must have a name.',
+                    animation: false,
+                    customClass: 'animated flash',
+                    backdrop: `
+                        rgba(255, 0, 0, 0.2)
+                    `
+                })
+            }
+        })
     }
 
     groupeAddHandler = () => {
@@ -51,7 +84,41 @@ class Library extends Component {
     }
 
     deleteGroupeHandler = () => {
-        // Delete Groupe
+        swal({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                swal({
+                    type: 'success',
+                    title: 'Deleted!',
+                    text: 'Your lesson has been deleted.',
+                    toast: true,
+                    animation: false,
+                    customClass: 'animated slideInDown',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            } else if (result.dismiss === swal.DismissReason.cancel) {
+                swal({
+                    type: 'error',
+                    title: 'Cancelled',
+                    text: 'Your lesson is safe.',
+                    toast: true,
+                    animation: false,
+                    customClass: 'animated slideInDown',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+              }
+        })
     }
 
     render() {
@@ -59,11 +126,11 @@ class Library extends Component {
         return (
             <Fragment>
                 <Navigationbar username={'Username'} clickedSettings={this.settingsToggleHandler} />
-                <Sidebar coursename={this.state.Coursename} clickedAddCourse={this.courseAddHandler} />
+                <Sidebar coursename={this.state.Coursename} clickedAddCourse={this.addCourseHandler} />
                 <div className={classes.Groupe}>
-                    <input className={classes.Btn} type={'button'} value={'+'}  onClick={this.groupeAddHandler} />
+                    <input className={classes.Btn} type={'button'} value={'+'} onClick={this.groupeAddHandler} />
                     <Groupe clickedOpenGroupe={this.openGroupeHandler} groupe={this.state.Groupe}
-                         clickedEdit={this.editGroupeHandler} clickedDelete={this.deleteGroupeHandler}
+                        clickedEdit={this.editGroupeHandler} clickedDelete={this.deleteGroupeHandler}
                     />
                 </div>
             </Fragment>
