@@ -14,7 +14,7 @@ class Groupe extends Component {
         let groupeCards = Object.keys(this.props.groupe).map(course => {
             return [...Array(this.props.groupe[course])].map(name => {
                 return Object.keys(name).map((cards, id) => {
-                    courseItems++;
+                    courseItems++; // to check if we have a lesson!
                     return (
                         <div key={course + cards + id} className={classes.Course}
                             onClick={this.props.clickedOpenGroupe}>
@@ -37,10 +37,10 @@ class Groupe extends Component {
             });
         });
 
-        if (courseItems === 0) {
-            groupeCards = <p>Please add a groupe of cards!</p>
-        }
-        
+        groupeCards = courseItems === 0 ?
+            <p>Please add a groupe of cards!</p> :
+            groupeCards;
+
         return (
             <Fragment>{groupeCards}</Fragment>
         );

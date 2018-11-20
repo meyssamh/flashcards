@@ -36,8 +36,8 @@ class Library extends Component {
         // Toggle for Setting in Navigationbar
     }
 
-    addCourseHandler = (props) => {
-
+    addCourseHandler = (e) => {
+        e.preventDefault();
         swal({
             text: 'Please enter the name of your new course:',
             input: 'text',
@@ -45,6 +45,16 @@ class Library extends Component {
             showCancelButton: true
         }).then((result) => {
             if (result.value) {
+                const value = result.value;
+                let NextElement = 0;
+                Object.keys(this.state.Coursename).map(key => {
+                    let int = parseInt(key);
+                    return NextElement = int + 1;
+                });
+                let New = { ...this.state.Coursename, [NextElement]: value };
+                this.setState({
+                    Coursename: New
+                });
                 swal({
                     type: 'success',
                     title: 'Done!',
@@ -63,16 +73,123 @@ class Library extends Component {
                     text: 'Your course must have a name.',
                     animation: false,
                     customClass: 'animated flash',
-                    backdrop: `
-                        rgba(255, 0, 0, 0.2)
-                    `
+                    backdrop: `rgba(255, 0, 0, 0.2)`
                 })
             }
         })
     }
 
-    groupeAddHandler = () => {
-        // Add Groupe to Groupe
+    deleteCourseHandler = (e) => {
+        e.preventDefault();
+        swal({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true
+        }).then((result) => {
+            if (result.value) {
+                const courses = this.state.Coursename;
+                swal({
+                    text: 'Please select course:',
+                    input: 'select',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Delete',
+                    inputOptions: courses,
+                    inputPlaceholder: 'Courses'
+                }).then((result) => {
+                    if (result.value !== '') {
+                        const value = result.value;
+                        const New = { ...this.state.Coursename };
+                        delete New[value];
+                        this.setState({
+                            Coursename: New
+                        });
+                        swal({
+                            type: 'success',
+                            title: 'Deleted!',
+                            text: 'Your course has been deleted.',
+                            toast: true,
+                            animation: false,
+                            customClass: 'animated slideInDown',
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                    } else if (result.value === '') {
+                        swal({
+                            type: 'warning',
+                            title: 'Error',
+                            text: 'You have to choose a course!',
+                            animation: false,
+                            customClass: 'animated flash',
+                            backdrop: `rgba(255, 0, 0, 0.2)`
+                        })
+                    }
+                })
+            }
+        })
+    }
+
+    showCourseHandler = () => {
+        // Filter lessons by course
+    }
+
+    addGroupeHandler = () => {
+        const courses = this.state.Coursename; // to be used in dropdown field
+        swal.mixin({
+            input: 'text',
+            confirmButtonText: 'Next',
+            showCancelButton: true,
+            progressSteps: ['1', '2']
+        }).queue([
+            {
+                text: 'Choose your course:',
+                input: 'select',
+                inputPlaceholder: 'Your course',
+                inputOptions: courses
+            },
+            {
+                text: 'Enter the name of your lesson:',
+                inputPlaceholder: 'Your lesson',
+                input: 'text'
+            },
+        ]).then((result) => {
+            if (result.dismiss === swal.DismissReason.cancel) {
+                return null;
+            } else if (result.dismiss === swal.DismissReason.backdrop) {
+                return null;
+            } else if (result.dismiss === swal.DismissReason.esc) {
+                return null;
+            } else if (result.value[0] !== '' && result.value[1] !== '') {
+                // const course = result.value[0];
+                // const lesson = result.value[1];
+                // let New = { ...this.state.Groupe }
+                // let NextElement = 0;
+                // Object.keys(this.state.Groupe).map(key => {
+                //     let int = parseInt(key);
+                //     return NextElement = int + 1;
+                // });
+                // let New = {
+                //     ...this.state.Coursename, [NextElement]: value
+                // };
+                // this.setState({
+                //     Coursename: New
+                // });
+                swal({
+                    title: 'Done!',
+                    text: 'Your lessen has been added.',
+                    type: 'success',
+                    showConfirmButton: false,
+                    toast: true,
+                    animation: false,
+                    position: 'top-end',
+                    customClass: 'animated slideInDown',
+                    timer: 2000
+                })
+            }
+        })
     }
 
     openGroupeHandler = () => {
@@ -83,7 +200,8 @@ class Library extends Component {
         // Edit Groupe
     }
 
-    deleteGroupeHandler = () => {
+    deleteGroupeHandler = (e) => {
+        console.log(e)
         swal({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -105,19 +223,7 @@ class Library extends Component {
                     showConfirmButton: false,
                     timer: 2000
                 })
-            } else if (result.dismiss === swal.DismissReason.cancel) {
-                swal({
-                    type: 'error',
-                    title: 'Cancelled',
-                    text: 'Your lesson is safe.',
-                    toast: true,
-                    animation: false,
-                    customClass: 'animated slideInDown',
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 2000
-                })
-              }
+            }
         })
     }
 
@@ -126,9 +232,10 @@ class Library extends Component {
         return (
             <Fragment>
                 <Navigationbar username={'Username'} clickedSettings={this.settingsToggleHandler} />
-                <Sidebar coursename={this.state.Coursename} clickedAddCourse={this.addCourseHandler} />
+                <Sidebar coursename={this.state.Coursename} clickedAddCourse={this.addCourseHandler}
+                    clickedDeleteCourse={this.deleteCourseHandler} clickedOnCourse={this.showCourseHandler} />
                 <div className={classes.Groupe}>
-                    <input className={classes.Btn} type={'button'} value={'+'} onClick={this.groupeAddHandler} />
+                    <input className={classes.Btn} type={'button'} value={'+'} onClick={this.addGroupeHandler} />
                     <Groupe clickedOpenGroupe={this.openGroupeHandler} groupe={this.state.Groupe}
                         clickedEdit={this.editGroupeHandler} clickedDelete={this.deleteGroupeHandler}
                     />
