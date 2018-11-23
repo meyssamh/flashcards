@@ -52,8 +52,10 @@ class Library extends Component {
                     return NextElement = int + 1;
                 });
                 let New = { ...this.state.Coursename, [NextElement]: value };
+                let NewGroupe = { ...this.state.Groupe, [value]: {}};
                 this.setState({
-                    Coursename: New
+                    Coursename: New,
+                    Groupe: NewGroupe
                 });
                 swal({
                     type: 'success',
@@ -83,7 +85,7 @@ class Library extends Component {
         e.preventDefault();
         swal({
             title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            text: "You won't be able to revert this and all your lessons in this course will be deleted!",
             type: 'warning',
             showCancelButton: true
         }).then((result) => {
@@ -102,9 +104,13 @@ class Library extends Component {
                     if (result.value !== '') {
                         const value = result.value;
                         const New = { ...this.state.Coursename };
+                        const course = this.state.Coursename[value];
                         delete New[value];
+                        const NewGroupe = { ...this.state.Groupe };
+                        delete NewGroupe[course];
                         this.setState({
-                            Coursename: New
+                            Coursename: New,
+                            Groupe: NewGroupe
                         });
                         swal({
                             type: 'success',
@@ -136,7 +142,8 @@ class Library extends Component {
         // Filter lessons by course
     }
 
-    addGroupeHandler = () => {
+    addGroupeHandler = (e) => {
+        e.preventDefault();
         const courses = this.state.Coursename; // to be used in dropdown field
         swal.mixin({
             input: 'text',
@@ -163,20 +170,15 @@ class Library extends Component {
             } else if (result.dismiss === swal.DismissReason.esc) {
                 return null;
             } else if (result.value[0] !== '' && result.value[1] !== '') {
-                // const course = result.value[0];
-                // const lesson = result.value[1];
-                // let New = { ...this.state.Groupe }
-                // let NextElement = 0;
-                // Object.keys(this.state.Groupe).map(key => {
-                //     let int = parseInt(key);
-                //     return NextElement = int + 1;
-                // });
-                // let New = {
-                //     ...this.state.Coursename, [NextElement]: value
-                // };
-                // this.setState({
-                //     Coursename: New
-                // });
+                const course = result.value[0];
+                const lesson = result.value[1];
+                const courseName = this.state.Coursename[course];
+                let Courses = { ...this.state.Groupe[courseName] , [lesson] : 0};
+                let localGroupe = { ...this.state.Groupe };
+                localGroupe[courseName] = Courses;
+                this.setState({
+                    Groupe: localGroupe
+                });
                 swal({
                     title: 'Done!',
                     text: 'Your lessen has been added.',
@@ -201,7 +203,7 @@ class Library extends Component {
     }
 
     deleteGroupeHandler = (e) => {
-        console.log(e)
+        console.log(e.value)
         swal({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",

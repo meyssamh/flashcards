@@ -27,7 +27,7 @@ class Groupe extends Component {
                                     {edit}
                                 </li>
                                 <li className={classes.ButtonDelete} title={'Delete'}
-                                    onClick={this.props.clickedDelete}>
+                                    value={cards} onClick={this.props.clickedDelete}>
                                     {del}
                                 </li>
                             </ul>
