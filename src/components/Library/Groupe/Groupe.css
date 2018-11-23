@@ -31,35 +31,37 @@
 }
 
 .ButtonEdit {
-    width: 21px;
-    height: 21px;
     font-size: 18px;
     border: none;
+    background-color: #f5deb3;
     color: #9c94a7;
-    padding: 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    margin: 2px;
+    outline: none;
     position: absolute;
-    bottom: 8px;
-    right: 60px;
+    bottom: 10px;
+    right: 62px;
+    width: 40px;
+    height: 40px;
+    border-radius: 0;
+    cursor: pointer;
+    text-decoration: none;
+    /* bottom: 8px;
+    right: 60px; */
 }
 
 .ButtonDelete {
-    width: 21px;
-    height: 21px;
     font-size: 18px;
     border: none;
+    background-color: #f5deb3;
     color: #9c94a7;
-    padding: 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    margin: 2px;
+    outline: none;
     position: absolute;
-    bottom: 8px;
-    right: 10px;
+    bottom: 10px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    border-radius: 0;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .ButtonEdit:hover{
@@ -72,4 +74,13 @@
     color: #dd4b4f;
     background-color: #ffbf89;
     border-radius: 10px;
+}
+
+.List {
+    list-style: none;
+    position: absolute;
+    bottom: 20px;
+    right: 10px;
+    width: 21px;
+    height: 21px;
 }

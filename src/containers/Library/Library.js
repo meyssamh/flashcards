@@ -52,7 +52,7 @@ class Library extends Component {
                     return NextElement = int + 1;
                 });
                 let New = { ...this.state.Coursename, [NextElement]: value };
-                let NewGroupe = { ...this.state.Groupe, [value]: {}};
+                let NewGroupe = { ...this.state.Groupe, [value]: {} };
                 this.setState({
                     Coursename: New,
                     Groupe: NewGroupe
@@ -173,8 +173,8 @@ class Library extends Component {
                 const course = result.value[0];
                 const lesson = result.value[1];
                 const courseName = this.state.Coursename[course];
-                let Courses = { ...this.state.Groupe[courseName] , [lesson] : 0};
-                let localGroupe = { ...this.state.Groupe };
+                const Courses = { ...this.state.Groupe[courseName], [lesson]: 0 };
+                const localGroupe = { ...this.state.Groupe };
                 localGroupe[courseName] = Courses;
                 this.setState({
                     Groupe: localGroupe
@@ -203,10 +203,12 @@ class Library extends Component {
     }
 
     deleteGroupeHandler = (e) => {
-        console.log(e.value)
+        e.preventDefault();
+        const course = e.currentTarget.name;
+        const lesson = e.currentTarget.value;
         swal({
             title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            text: "You won't be able to revert this and all your cards will be lost!",
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -214,6 +216,13 @@ class Library extends Component {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.value) {
+                const newGroupe = { ...this.state.Groupe[course] };
+                const oldGroupe = { ...this.state.Groupe };
+                delete newGroupe[lesson];
+                oldGroupe[course] = newGroupe;
+                this.setState({
+                    Groupe: oldGroupe
+                });
                 swal({
                     type: 'success',
                     title: 'Deleted!',
@@ -231,6 +240,24 @@ class Library extends Component {
 
     render() {
 
+        let courseItems = 0;
+        let groupeLoop = Object.keys(this.state.Groupe).map(course => {
+            return [...Array(this.state.Groupe[course])].map(name => {
+                return Object.keys(name).map((cards, id) => {
+                    courseItems++; // to check if we have a lesson!
+                    return (
+                        <Groupe clickedOpenGroupe={this.openGroupeHandler} key={course + cards + id}
+                            clickedEdit={this.editGroupeHandler} clickedDelete={this.deleteGroupeHandler}
+                            cards={cards} course={course} count={Object.values(name)[id]} />
+                    );
+                });
+            });
+        })
+
+        groupeLoop = courseItems === 0 ?
+            <p>Please add a groupe of cards!</p> :
+            groupeLoop;
+
         return (
             <Fragment>
                 <Navigationbar username={'Username'} clickedSettings={this.settingsToggleHandler} />
@@ -238,9 +265,7 @@ class Library extends Component {
                     clickedDeleteCourse={this.deleteCourseHandler} clickedOnCourse={this.showCourseHandler} />
                 <div className={classes.Groupe}>
                     <input className={classes.Btn} type={'button'} value={'+'} onClick={this.addGroupeHandler} />
-                    <Groupe clickedOpenGroupe={this.openGroupeHandler} groupe={this.state.Groupe}
-                        clickedEdit={this.editGroupeHandler} clickedDelete={this.deleteGroupeHandler}
-                    />
+                    {groupeLoop}
                 </div>
             </Fragment>
         );
