@@ -4,6 +4,7 @@ import swal from 'sweetalert2';
 import Navigationbar from '../../components/Library/Navigationbar/Navigationbar';
 import Sidebar from '../../components/Library/Sidebar/Sidebar';
 import Groupe from '../../components/Library/Groupe/Groupe';
+import Courses from '../../components/Library/Sidebar/Courses/Courses';
 import classes from './Library.css';
 
 class Library extends Component {
@@ -29,7 +30,8 @@ class Library extends Component {
                 'Makro 2': 93,
                 'VWL': 80
             }
-        }
+        },
+        ShowLesson: ''
     }
 
     settingsToggleHandler = () => {
@@ -48,11 +50,11 @@ class Library extends Component {
                 const value = result.value;
                 let NextElement = 0;
                 Object.keys(this.state.Coursename).map(key => {
-                    let int = parseInt(key);
+                    const int = parseInt(key);
                     return NextElement = int + 1;
                 });
-                let New = { ...this.state.Coursename, [NextElement]: value };
-                let NewGroupe = { ...this.state.Groupe, [value]: {} };
+                const New = { ...this.state.Coursename, [NextElement]: value };
+                const NewGroupe = { ...this.state.Groupe, [value]: {} };
                 this.setState({
                     Coursename: New,
                     Groupe: NewGroupe
@@ -138,8 +140,12 @@ class Library extends Component {
         })
     }
 
-    showCourseHandler = () => {
-        // Filter lessons by course
+    showCourseHandler = (e) => {
+        e.preventDefault();
+        const show = e.currentTarget.value;
+        this.setState({
+            ShowLesson: show
+        });
     }
 
     addGroupeHandler = (e) => {
@@ -240,29 +246,53 @@ class Library extends Component {
 
     render() {
 
-        let courseItems = 0;
-        let groupeLoop = Object.keys(this.state.Groupe).map(course => {
-            return [...Array(this.state.Groupe[course])].map(name => {
-                return Object.keys(name).map((cards, id) => {
-                    courseItems++; // to check if we have a lesson!
-                    return (
-                        <Groupe clickedOpenGroupe={this.openGroupeHandler} key={course + cards + id}
-                            clickedEdit={this.editGroupeHandler} clickedDelete={this.deleteGroupeHandler}
-                            cards={cards} course={course} count={Object.values(name)[id]} />
-                    );
-                });
+        let sidebarCourses = Object.keys(this.state.Coursename)
+            .map(courseID => {
+                return [...Array(this.state.Coursename[courseID])].map((name) => {
+                    return <Courses key={courseID + name} clickedOnCourse={this.showCourseHandler}
+                        children={name} value={name} />
+                })
             });
-        })
+
+        sidebarCourses = sidebarCourses.length === 0 ?
+            <p>Please add a Course</p> :
+            sidebarCourses;
+
+        let courseItems = 0;
+
+        let groupeLoop = this.state.ShowLesson === '' ?
+            (Object.keys(this.state.Groupe).map(course => {
+                return [...Array(this.state.Groupe[course])].map(name => {
+                    return Object.keys(name).map((cards, id) => {
+                        courseItems++; // to check if we have a lesson!
+                        return (
+                            <Groupe clickedOpenGroupe={this.openGroupeHandler} key={course + cards + id}
+                                clickedEdit={this.editGroupeHandler} clickedDelete={this.deleteGroupeHandler}
+                                cards={cards} course={course} count={Object.values(name)[id]} />
+                        );
+                    });
+                });
+            })) :
+            (Object.keys(this.state.Groupe[this.state.ShowLesson]).map((name, id) => {
+                courseItems++; // to check if we have a lesson!
+                return (
+                    <Groupe clickedOpenGroupe={this.openGroupeHandler}
+                        key={this.state.ShowLesson + name + id}
+                        clickedEdit={this.editGroupeHandler} clickedDelete={this.deleteGroupeHandler}
+                        cards={name} course={this.state.ShowLesson}
+                        count={Object.values(this.state.Groupe[this.state.ShowLesson])[id]} />
+                );
+            }));
 
         groupeLoop = courseItems === 0 ?
-            <p>Please add a groupe of cards!</p> :
+            <p>Please add a lesson!</p> :
             groupeLoop;
 
         return (
             <Fragment>
                 <Navigationbar username={'Username'} clickedSettings={this.settingsToggleHandler} />
-                <Sidebar coursename={this.state.Coursename} clickedAddCourse={this.addCourseHandler}
-                    clickedDeleteCourse={this.deleteCourseHandler} clickedOnCourse={this.showCourseHandler} />
+                <Sidebar clickedAddCourse={this.addCourseHandler} clickedDeleteCourse={this.deleteCourseHandler}
+                    sidebarCourses={sidebarCourses} />
                 <div className={classes.Groupe}>
                     <input className={classes.Btn} type={'button'} value={'+'} onClick={this.addGroupeHandler} />
                     {groupeLoop}

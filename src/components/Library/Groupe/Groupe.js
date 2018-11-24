@@ -11,7 +11,7 @@ class Groupe extends Component {
         const del = <FontAwesomeIcon icon={faTrashAlt} />;
 
         return (
-            <div key={this.props.cards + this.props.course + this.props.count} className={classes.Course}
+            <div /*key={this.props.cards + this.props.course + this.props.count}*/ className={classes.Course}
                 onClick={this.props.clickedOpenGroupe}>
                 <p className={classes.Name}>{this.props.cards}</p>
                 <p className={classes.Group}>{this.props.course}</p>

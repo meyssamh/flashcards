@@ -1,19 +1,31 @@
+.List {
+    text-decoration: none;
+    margin-top: 2px;
+}
+
 .Course {
     text-align: center;
     white-space: nowrap; 
     overflow: hidden;
     text-overflow: ellipsis;
+    background-color: #eae1d7;
+    width: 18vw;
     color: #685f74;
     font-size: 18px;
     padding: 15px 16px;
-    text-decoration: none;
+    border: none;
     cursor: pointer;
+    outline: none;
 }
 
 .Course:hover {
     background-color: #ffbf89;
 }
 
-.Course:active {
+.Course:focus {
     background-color: #8bd0b4;
+}
+
+.Course:focus:hover {
+    background-color: #ffbf89;
 }
