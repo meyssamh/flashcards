@@ -6,6 +6,9 @@ import classes from './Groupe.css';
 import Progressbar from '../../components/Groupe/Progressbar/Progressbar';
 import Boxes from '../../components/Groupe/Boxes/Boxes';
 
+//FIXME: New Style must be done!
+//FIXME: Correct css from buttons and boxes!
+
 class Groupe extends Component {
     state = {
         Groupename: {
@@ -21,6 +24,8 @@ class Groupe extends Component {
             6: '7'
         }
     }
+
+    //TODO: Progressbar counting must be done!
 
     addCardHandler = () => {
         // Add Card to Groupe

@@ -7,6 +7,11 @@ import Groupe from '../../components/Library/Groupe/Groupe';
 import Courses from '../../components/Library/Sidebar/Courses/Courses';
 import classes from './Library.css';
 
+//FIXME: New Style must be done!
+//TODO: Username's logic must be added!
+//TODO: Setting must be added!
+//TODO: Lifecycle must be checked!
+
 class Library extends Component {
     state = {
         Coursename: {
@@ -139,6 +144,8 @@ class Library extends Component {
             }
         })
     }
+
+    //TODO: Delete button must be inactive at first!
 
     showCourseHandler = (e) => {
         e.preventDefault();

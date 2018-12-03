@@ -6,16 +6,17 @@ import Library from './containers/Library/Library';
 // import Edit from './containers/Edit/Edit';
 
 class App extends Component {
-  render() {
-    return (
-      <div>
-        <Library />
-        {/* <Groupe /> */}
-        {/* <Cards /> */}
-        {/* <Edit /> */}
-      </div>
-    );
-  }
+	render() {
+
+		return (
+			<div>
+				<Library />
+				{/* <Groupe /> */}
+				{/* <Cards /> */}
+				{/* <Edit /> */}
+			</div>
+		);
+	}
 }
 
 export default App;

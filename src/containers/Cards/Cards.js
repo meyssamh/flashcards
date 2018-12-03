@@ -4,6 +4,9 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 import classes from './Cards.css';
 
+//FIXME: New Style must be done!
+//FIXME: Must fix the css for buttons!
+
 class Cards extends Component {
     state = {}
 
