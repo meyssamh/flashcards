@@ -6,6 +6,7 @@ import Sidebar from '../../components/Library/Sidebar/Sidebar';
 import Groupe from '../../components/Library/Groupe/Groupe';
 import Courses from '../../components/Library/Sidebar/Courses/Courses';
 import classes from './Library.css';
+import axios from '../../axios-orders';
 
 //FIXME: New Style must be done!
 //TODO: Username's logic must be added!
@@ -64,6 +65,16 @@ class Library extends Component {
                     Coursename: New,
                     Groupe: NewGroupe
                 });
+                axios.post('/Coursename', New).then(
+                    response => console.log(response)
+                ).catch(
+                    error => console.log(error)
+                );
+                axios.post('/Groupe', NewGroupe).then(
+                    response => console.log(response)
+                ).catch(
+                    error => console.log(error)
+                );
                 swal({
                     type: 'success',
                     title: 'Done!',
@@ -119,6 +130,16 @@ class Library extends Component {
                             Coursename: New,
                             Groupe: NewGroupe
                         });
+                        axios.post('/Coursename', New).then(
+                            response => console.log(response)
+                        ).catch(
+                            error => console.log(error)
+                        );
+                        axios.post('/Groupe', NewGroupe).then(
+                            response => console.log(response)
+                        ).catch(
+                            error => console.log(error)
+                        );
                         swal({
                             type: 'success',
                             title: 'Deleted!',
@@ -192,6 +213,11 @@ class Library extends Component {
                 this.setState({
                     Groupe: localGroupe
                 });
+                axios.post('/Groupe', localGroupe).then(
+                    response => console.log(response)
+                ).catch(
+                    error => console.log(error)
+                );
                 swal({
                     title: 'Done!',
                     text: 'Your lessen has been added.',
@@ -236,6 +262,11 @@ class Library extends Component {
                 this.setState({
                     Groupe: oldGroupe
                 });
+                axios.post('/Groupe', oldGroupe).then(
+                    response => console.log(response)
+                ).catch(
+                    error => console.log(error)
+                );
                 swal({
                     type: 'success',
                     title: 'Deleted!',

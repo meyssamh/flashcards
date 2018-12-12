@@ -1,0 +1,24 @@
+{
+  "Coursename": {
+    "0": "IT",
+    "1": "BWL",
+    "2": "VWL"
+  },
+  "Groupe": {
+    "IT": {
+      "Java": 17,
+      "JavaScript": 15,
+      "C++": 0
+    },
+    "BWL": {
+      "Marketing": 25,
+      "Steuerlehre": 100,
+      "BWL": 76
+    },
+    "VWL": {
+      "Makro 1": 55,
+      "Makro 2": 93,
+      "VWL": 80
+    }
+  }
+}
