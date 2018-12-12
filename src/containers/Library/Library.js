@@ -15,29 +15,47 @@ import axios from '../../axios-orders';
 
 class Library extends Component {
     state = {
-        Coursename: {
-            0: 'IT',
-            1: 'BWL',
-            2: 'VWL'
-        },
-        Groupe: {
-            'IT': {
-                'Java': 17,
-                'JavaScript': 15,
-                'C++': 0
-            },
-            'BWL': {
-                'Marketing': 25,
-                'Steuerlehre': 100,
-                'BWL': 76
-            },
-            'VWL': {
-                'Makro 1': 55,
-                'Makro 2': 93,
-                'VWL': 80
-            }
-        },
+        Coursename: {},
+        Groupe: {},
         ShowLesson: ''
+    }
+
+    loadCourse = () => {
+        this.setState({ Loading: true });
+        return axios.get('/Coursename').then(
+            response => {
+                this.setState({
+                    Coursename: response.data
+                });
+            }
+        ).catch(
+            error => {
+                this.setState({
+                    Error: `${error}`
+                });
+            }
+        )
+    }
+
+    loadLesson = () => {
+        return axios.get('/Groupe').then(
+            response => {
+                this.setState({
+                    Groupe: response.data
+                });
+            }
+        ).catch(
+            error => {
+                this.setState({
+                    Error: `${error}`
+                });
+            }
+        )
+    }
+
+    componentDidMount() {
+        this.loadCourse();
+        this.loadLesson();
     }
 
     settingsToggleHandler = () => {
