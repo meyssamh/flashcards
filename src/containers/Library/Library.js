@@ -11,17 +11,17 @@ import axios from '../../axios-orders';
 //FIXME: New Style must be done!
 //TODO: Username's logic must be added!
 //TODO: Setting must be added!
-//TODO: Lifecycle must be checked!
 
 class Library extends Component {
     state = {
         Coursename: {},
         Groupe: {},
-        ShowLesson: ''
+        ShowLesson: '',
+        Loading: false,
+        Error: ''
     }
 
     loadCourse = () => {
-        this.setState({ Loading: true });
         return axios.get('/Coursename').then(
             response => {
                 this.setState({
@@ -30,6 +30,7 @@ class Library extends Component {
             }
         ).catch(
             error => {
+                console.log(error);
                 this.setState({
                     Error: `${error}`
                 });
@@ -38,6 +39,7 @@ class Library extends Component {
     }
 
     loadLesson = () => {
+        this.setState({ Loading: true });
         return axios.get('/Groupe').then(
             response => {
                 this.setState({
@@ -46,6 +48,7 @@ class Library extends Component {
             }
         ).catch(
             error => {
+                console.log(error);
                 this.setState({
                     Error: `${error}`
                 });
@@ -83,16 +86,6 @@ class Library extends Component {
                     Coursename: New,
                     Groupe: NewGroupe
                 });
-                axios.post('/Coursename', New).then(
-                    response => console.log(response)
-                ).catch(
-                    error => console.log(error)
-                );
-                axios.post('/Groupe', NewGroupe).then(
-                    response => console.log(response)
-                ).catch(
-                    error => console.log(error)
-                );
                 swal({
                     type: 'success',
                     title: 'Done!',
@@ -137,7 +130,9 @@ class Library extends Component {
                     inputOptions: courses,
                     inputPlaceholder: 'Courses'
                 }).then((result) => {
-                    if (result.value !== '') {
+                    if (result.value === undefined) {
+                        return null;
+                    } else if (result.value !== '') {
                         const value = result.value;
                         const New = { ...this.state.Coursename };
                         const course = this.state.Coursename[value];
@@ -148,16 +143,6 @@ class Library extends Component {
                             Coursename: New,
                             Groupe: NewGroupe
                         });
-                        axios.post('/Coursename', New).then(
-                            response => console.log(response)
-                        ).catch(
-                            error => console.log(error)
-                        );
-                        axios.post('/Groupe', NewGroupe).then(
-                            response => console.log(response)
-                        ).catch(
-                            error => console.log(error)
-                        );
                         swal({
                             type: 'success',
                             title: 'Deleted!',
@@ -231,11 +216,6 @@ class Library extends Component {
                 this.setState({
                     Groupe: localGroupe
                 });
-                axios.post('/Groupe', localGroupe).then(
-                    response => console.log(response)
-                ).catch(
-                    error => console.log(error)
-                );
                 swal({
                     title: 'Done!',
                     text: 'Your lessen has been added.',
@@ -252,10 +232,34 @@ class Library extends Component {
     }
 
     openGroupeHandler = () => {
+        const Courses = { ...this.state.Coursename };
+        const Groupes = { ...this.state.Groupe };
+        axios.post('/Coursename', Courses).then(
+            response => console.log(response)
+        ).catch(
+            error => console.log(error)
+        );
+        axios.post('/Groupe', Groupes).then(
+            response => console.log(response)
+        ).catch(
+            error => console.log(error)
+        );
         // Open Groupe (window.push or window.location)
     }
 
     editGroupeHandler = () => {
+        const Courses = { ...this.state.Coursename };
+        const Groupes = { ...this.state.Groupe };
+        axios.post('/Coursename', Courses).then(
+            response => console.log(response)
+        ).catch(
+            error => console.log(error)
+        );
+        axios.post('/Groupe', Groupes).then(
+            response => console.log(response)
+        ).catch(
+            error => console.log(error)
+        );
         // Edit Groupe
     }
 
@@ -300,7 +304,35 @@ class Library extends Component {
         })
     }
 
+    signOutHandler = () => {
+        const Courses = { ...this.state.Coursename };
+        const Groupes = { ...this.state.Groupe };
+        axios.post('/Coursename', Courses).then(
+            response => console.log(response)
+        ).catch(
+            error => console.log(error)
+        );
+        axios.post('/Groupe', Groupes).then(
+            response => console.log(response)
+        ).catch(
+            error => console.log(error)
+        );
+        //Signout method comes here!
+    }
+
     render() {
+
+        if (this.state.Loading === false) {
+            return <p>Loading ...</p>
+        }
+
+        if (this.state.Error.length !== 0) {
+            return <div>
+                <p>Sorry an Error has occurred:</p>
+                <br />
+                <p>{this.state.Error}</p>
+            </div>
+        }
 
         let sidebarCourses = Object.keys(this.state.Coursename)
             .map(courseID => {
