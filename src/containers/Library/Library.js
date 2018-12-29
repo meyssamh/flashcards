@@ -5,6 +5,7 @@ import Navigationbar from '../../components/Library/Navigationbar/Navigationbar'
 import Sidebar from '../../components/Library/Sidebar/Sidebar';
 import Groupe from '../../components/Library/Groupe/Groupe';
 import Courses from '../../components/Library/Sidebar/Courses/Courses';
+import Spinner from '../../components/UI/Spinner';
 import classes from './Library.css';
 import axios from '../../axios-orders';
 
@@ -30,9 +31,9 @@ class Library extends Component {
             }
         ).catch(
             error => {
-                console.log(error);
+                console.log(error.message);
                 this.setState({
-                    Error: `${error}`
+                    Error: `${error.message}`
                 });
             }
         )
@@ -43,14 +44,15 @@ class Library extends Component {
         return axios.get('/Groupe').then(
             response => {
                 this.setState({
-                    Groupe: response.data
+                    Groupe: response.data,
+                    Loading: false
                 });
             }
         ).catch(
             error => {
-                console.log(error);
+                console.log(error.message);
                 this.setState({
-                    Error: `${error}`
+                    Error: `${error.message}`
                 });
             }
         )
@@ -322,16 +324,13 @@ class Library extends Component {
 
     render() {
 
-        if (this.state.Loading === false) {
-            return <p>Loading ...</p>
-        }
+        let err = <div>
+            <p>Sorry an Error has occurred:</p>
+            <p>{this.state.Error}</p>
+        </div>;
 
         if (this.state.Error.length !== 0) {
-            return <div>
-                <p>Sorry an Error has occurred:</p>
-                <br />
-                <p>{this.state.Error}</p>
-            </div>
+            return err;
         }
 
         let sidebarCourses = Object.keys(this.state.Coursename)
@@ -376,8 +375,10 @@ class Library extends Component {
             <p>Please add a lesson!</p> :
             groupeLoop;
 
-        return (
-            <Fragment>
+        let content = this.state.Error.length !== 0 ? err : <Spinner />;
+
+        if (this.state.Loading === false) {
+            content = <Fragment>
                 <Navigationbar username={'Username'} clickedSettings={this.settingsToggleHandler} />
                 <Sidebar clickedAddCourse={this.addCourseHandler} clickedDeleteCourse={this.deleteCourseHandler}
                     sidebarCourses={sidebarCourses} />
@@ -385,7 +386,11 @@ class Library extends Component {
                     <input className={classes.Btn} type={'button'} value={'+'} onClick={this.addGroupeHandler} />
                     {groupeLoop}
                 </div>
-            </Fragment>
+            </Fragment>;
+        }
+
+        return (
+            content
         );
     }
 }
