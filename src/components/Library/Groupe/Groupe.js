@@ -16,9 +16,9 @@ class Groupe extends Component {
                 <p className={classes.Name}>{this.props.cards}</p>
                 <p className={classes.Group}>{this.props.course}</p>
                 <p className={classes.Count}>{this.props.count} Cards</p>
-                <button className={classes.ButtonEdit} title={'Delete'}
+                <button className={classes.ButtonEdit} title={'Edit'}
                     type={'button'} value={this.props.cards} name={this.props.course}
-                    onClick={this.props.clickedDelete}>{edit}</button>
+                    onClick={this.props.clickedEdit}>{edit}</button>
                 <button className={classes.ButtonDelete} title={'Delete'}
                     type={'button'} value={this.props.cards} name={this.props.course}
                     onClick={this.props.clickedDelete}>{del}</button>

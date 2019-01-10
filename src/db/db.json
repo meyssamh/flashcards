@@ -1,24 +1,127 @@
 {
-  "Coursename": {
-    "0": "IT",
-    "1": "BWL",
-    "2": "VWL"
-  },
-  "Groupe": {
+  "Lessons": {
     "IT": {
-      "Java": 17,
-      "JavaScript": 15,
-      "C++": 0
+      "Java": {
+        "count": 1,
+        "cards": {
+          "1": {
+            "box": 0,
+            "type": 0,
+            "faivorite": false,
+            "question": "Lorem?",
+            "anwser": "Lorem!",
+            "picture": ""
+          }
+        }
+      },
+      "JavaScript": {
+        "count": 1,
+        "cards": {
+          "1": {
+            "box": 0,
+            "type": 0,
+            "faivorite": false,
+            "question": "",
+            "anwser": "",
+            "picture": ""
+          }
+        }
+      },
+      "C++": {
+        "count": 1,
+        "cards": {
+          "1": {
+            "box": 0,
+            "type": 0,
+            "faivorite": false,
+            "question": "",
+            "anwser": "",
+            "picture": ""
+          }
+        }
+      }
     },
     "BWL": {
-      "Marketing": 25,
-      "Steuerlehre": 100,
-      "BWL": 76
+      "Marketing": {
+        "count": 1,
+        "cards": {
+          "1": {
+            "box": 0,
+            "type": 0,
+            "faivorite": false,
+            "question": "",
+            "anwser": "",
+            "picture": ""
+          }
+        }
+      },
+      "Steuerlehre": {
+        "count": 1,
+        "cards": {
+          "1": {
+            "box": 0,
+            "type": 0,
+            "faivorite": false,
+            "question": "",
+            "anwser": "",
+            "picture": ""
+          }
+        }
+      },
+      "BWL": {
+        "count": 1,
+        "cards": {
+          "1": {
+            "box": 0,
+            "type": 0,
+            "faivorite": false,
+            "question": "",
+            "anwser": "",
+            "picture": ""
+          }
+        }
+      }
     },
     "VWL": {
-      "Makro 1": 55,
-      "Makro 2": 93,
-      "VWL": 80
+      "Makro 1": {
+        "count": 1,
+        "cards": {
+          "1": {
+            "box": 0,
+            "type": 0,
+            "faivorite": false,
+            "question": "",
+            "anwser": "",
+            "picture": ""
+          }
+        }
+      },
+      "Makro 2": {
+        "count": 1,
+        "cards": {
+          "1": {
+            "box": 0,
+            "type": 0,
+            "faivorite": false,
+            "question": "",
+            "anwser": "",
+            "picture": ""
+          }
+        }
+      },
+      "VWL": {
+        "count": 1,
+        "cards": {
+          "1": {
+            "box": 0,
+            "type": 0,
+            "faivorite": false,
+            "question": "",
+            "anwser": "",
+            "picture": ""
+          }
+        }
+      }
     }
   }
 }

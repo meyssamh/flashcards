@@ -15,36 +15,18 @@ import axios from '../../axios-orders';
 
 class Library extends Component {
     state = {
-        Coursename: {},
-        Groupe: {},
+        Lessons: {},
         ShowLesson: '',
         Loading: false,
         Error: ''
     }
 
-    loadCourse = () => {
-        return axios.get('/Coursename').then(
-            response => {
-                this.setState({
-                    Coursename: response.data
-                });
-            }
-        ).catch(
-            error => {
-                console.log(error.message);
-                this.setState({
-                    Error: `${error.message}`
-                });
-            }
-        )
-    }
-
-    loadLesson = () => {
+    loadLessons = () => {
         this.setState({ Loading: true });
-        return axios.get('/Groupe').then(
+        return axios.get('/Lessons').then(
             response => {
                 this.setState({
-                    Groupe: response.data,
+                    Lessons: response.data,
                     Loading: false
                 });
             }
@@ -52,15 +34,15 @@ class Library extends Component {
             error => {
                 console.log(error.message);
                 this.setState({
-                    Error: `${error.message}`
+                    Error: `${error.message}`,
+                    Loading: false
                 });
             }
-        )
+        );
     }
 
     componentDidMount() {
-        this.loadCourse();
-        this.loadLesson();
+        this.loadLessons();
     }
 
     settingsToggleHandler = () => {
@@ -77,16 +59,9 @@ class Library extends Component {
         }).then((result) => {
             if (result.value) {
                 const value = result.value;
-                let NextElement = 0;
-                Object.keys(this.state.Coursename).map(key => {
-                    const int = parseInt(key);
-                    return NextElement = int + 1;
-                });
-                const New = { ...this.state.Coursename, [NextElement]: value };
-                const NewGroupe = { ...this.state.Groupe, [value]: {} };
+                const NewLessons = { ...this.state.Lessons, [value]: {} };
                 this.setState({
-                    Coursename: New,
-                    Groupe: NewGroupe
+                    Lessons: NewLessons
                 });
                 swal({
                     type: 'success',
@@ -114,6 +89,8 @@ class Library extends Component {
 
     deleteCourseHandler = (e) => {
         e.preventDefault();
+        const lessons = { ...this.state.Lessons };
+        const courses = Object.keys(lessons).map((name) => name); // to be used in dropdown field
         swal({
             title: 'Are you sure?',
             text: "You won't be able to revert this and all your lessons in this course will be deleted!",
@@ -121,7 +98,6 @@ class Library extends Component {
             showCancelButton: true
         }).then((result) => {
             if (result.value) {
-                const courses = this.state.Coursename;
                 swal({
                     text: 'Please select course:',
                     input: 'select',
@@ -135,15 +111,11 @@ class Library extends Component {
                     if (result.value === undefined) {
                         return null;
                     } else if (result.value !== '') {
-                        const value = result.value;
-                        const New = { ...this.state.Coursename };
-                        const course = this.state.Coursename[value];
-                        delete New[value];
-                        const NewGroupe = { ...this.state.Groupe };
-                        delete NewGroupe[course];
+                        const course = courses[result.value];
+                        delete lessons[course];
                         this.setState({
-                            Coursename: New,
-                            Groupe: NewGroupe
+                            Lessons: lessons,
+                            ShowLesson: ''
                         });
                         swal({
                             type: 'success',
@@ -183,7 +155,8 @@ class Library extends Component {
 
     addGroupeHandler = (e) => {
         e.preventDefault();
-        const courses = this.state.Coursename; // to be used in dropdown field
+        const lessons = { ...this.state.Lessons };
+        const courses = Object.keys(lessons).map((name) => name); // to be used in dropdown field
         swal.mixin({
             input: 'text',
             confirmButtonText: 'Next',
@@ -209,39 +182,50 @@ class Library extends Component {
             } else if (result.dismiss === swal.DismissReason.esc) {
                 return null;
             } else if (result.value[0] !== '' && result.value[1] !== '') {
-                const course = result.value[0];
+                const course = courses[result.value[0]];
                 const lesson = result.value[1];
-                const courseName = this.state.Coursename[course];
-                const Courses = { ...this.state.Groupe[courseName], [lesson]: 0 };
-                const localGroupe = { ...this.state.Groupe };
-                localGroupe[courseName] = Courses;
-                this.setState({
-                    Groupe: localGroupe
-                });
-                swal({
-                    title: 'Done!',
-                    text: 'Your lessen has been added.',
-                    type: 'success',
-                    showConfirmButton: false,
-                    toast: true,
-                    animation: false,
-                    position: 'top-end',
-                    customClass: 'animated slideInDown',
-                    timer: 2000
-                })
-            }
+                const LessonsKey = Object.keys({ ...lessons[course] }).map((name) => name);
+                let i = 0;
+                do {
+                    if (LessonsKey[i] === lesson) {
+                        swal({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: 'Lesson already exist!',
+                            backdrop: `rgba(255, 0, 0, 0.2)` 
+                        })
+                    } else {
+                        const newLessons = {
+                            ...lessons[course], [lesson]: {
+                                count: 0,
+                                cards: {}
+                            }
+                        };
+                        lessons[course] = newLessons;
+                        this.setState({
+                            Lessons: lessons
+                        });
+                        swal({
+                            title: 'Done!',
+                            text: 'Your lessen has been added.',
+                            type: 'success',
+                            showConfirmButton: false,
+                            toast: true,
+                            animation: false,
+                            position: 'top-end',
+                            customClass: 'animated slideInDown',
+                            timer: 2000
+                        })
+                    }
+                    i++;
+                } while (i in LessonsKey);
+            };
         })
     }
 
     openGroupeHandler = () => {
-        const Courses = { ...this.state.Coursename };
-        const Groupes = { ...this.state.Groupe };
-        axios.post('/Coursename', Courses).then(
-            response => console.log(response)
-        ).catch(
-            error => console.log(error)
-        );
-        axios.post('/Groupe', Groupes).then(
+        const Lessons = { ...this.state.Lessons };
+        axios.post('/Lessons', Lessons).then(
             response => console.log(response)
         ).catch(
             error => console.log(error)
@@ -250,14 +234,8 @@ class Library extends Component {
     }
 
     editGroupeHandler = () => {
-        const Courses = { ...this.state.Coursename };
-        const Groupes = { ...this.state.Groupe };
-        axios.post('/Coursename', Courses).then(
-            response => console.log(response)
-        ).catch(
-            error => console.log(error)
-        );
-        axios.post('/Groupe', Groupes).then(
+        const Lessons = { ...this.state.Lessons };
+        axios.post('/Lessons', Lessons).then(
             response => console.log(response)
         ).catch(
             error => console.log(error)
@@ -279,18 +257,13 @@ class Library extends Component {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.value) {
-                const newGroupe = { ...this.state.Groupe[course] };
-                const oldGroupe = { ...this.state.Groupe };
-                delete newGroupe[lesson];
-                oldGroupe[course] = newGroupe;
+                const newLessons = { ...this.state.Lessons[course] };
+                const oldLessons = { ...this.state.Lessons };
+                delete newLessons[lesson];
+                oldLessons[course] = newLessons;
                 this.setState({
-                    Groupe: oldGroupe
+                    Lessons: oldLessons
                 });
-                axios.post('/Groupe', oldGroupe).then(
-                    response => console.log(response)
-                ).catch(
-                    error => console.log(error)
-                );
                 swal({
                     type: 'success',
                     title: 'Deleted!',
@@ -307,14 +280,8 @@ class Library extends Component {
     }
 
     signOutHandler = () => {
-        const Courses = { ...this.state.Coursename };
-        const Groupes = { ...this.state.Groupe };
-        axios.post('/Coursename', Courses).then(
-            response => console.log(response)
-        ).catch(
-            error => console.log(error)
-        );
-        axios.post('/Groupe', Groupes).then(
+        const Lessons = { ...this.state.Lessons };
+        axios.post('/Lessons', Lessons).then(
             response => console.log(response)
         ).catch(
             error => console.log(error)
@@ -322,23 +289,24 @@ class Library extends Component {
         //Signout method comes here!
     }
 
+    //TODO: add componentWillUnmount
+
     render() {
 
         let err = <div>
             <p>Sorry an Error has occurred:</p>
-            <p>{this.state.Error}</p>
+            <p style={{ color: 'red' }}>{this.state.Error}</p>
+            <p>Please Try again later!</p>
         </div>;
 
         if (this.state.Error.length !== 0) {
             return err;
         }
 
-        let sidebarCourses = Object.keys(this.state.Coursename)
-            .map(courseID => {
-                return [...Array(this.state.Coursename[courseID])].map((name) => {
-                    return <Courses key={courseID + name} clickedOnCourse={this.showCourseHandler}
-                        children={name} value={name} />
-                })
+        let sidebarCourses = Object.keys(this.state.Lessons)
+            .map(course => {
+                return <Courses key={course} clickedOnCourse={this.showCourseHandler}
+                    children={course} value={course} />
             });
 
         sidebarCourses = sidebarCourses.length === 0 ?
@@ -346,28 +314,31 @@ class Library extends Component {
             sidebarCourses;
 
         let courseItems = 0;
+        let showLesson = this.state.ShowLesson === '' ?
+            {} :
+            { ...this.state.Lessons[this.state.ShowLesson] };
 
         let groupeLoop = this.state.ShowLesson === '' ?
-            (Object.keys(this.state.Groupe).map(course => {
-                return [...Array(this.state.Groupe[course])].map(name => {
-                    return Object.keys(name).map((cards, id) => {
+            (Object.keys(this.state.Lessons).map(course => {
+                return [...Array(this.state.Lessons[course])].map(name => {
+                    return Object.keys(name).map((lesson, id) => {
                         courseItems++; // to check if we have a lesson!
+                        let everyLesson = name[lesson];
                         return (
-                            <Groupe clickedOpenGroupe={this.openGroupeHandler} key={course + cards + id}
+                            <Groupe clickedOpenGroupe={this.openGroupeHandler} key={course + lesson + id}
                                 clickedEdit={this.editGroupeHandler} clickedDelete={this.deleteGroupeHandler}
-                                cards={cards} course={course} count={Object.values(name)[id]} />
+                                cards={lesson} course={course} count={everyLesson.count} />
                         );
                     });
                 });
             })) :
-            (Object.keys(this.state.Groupe[this.state.ShowLesson]).map((name, id) => {
-                courseItems++; // to check if we have a lesson!
+            (Object.keys(showLesson).map((lesson, id) => {
+                let everyLesson = showLesson[lesson];
+                courseItems++;
                 return (
-                    <Groupe clickedOpenGroupe={this.openGroupeHandler}
-                        key={this.state.ShowLesson + name + id}
+                    <Groupe clickedOpenGroupe={this.openGroupeHandler} key={lesson + id}
                         clickedEdit={this.editGroupeHandler} clickedDelete={this.deleteGroupeHandler}
-                        cards={name} course={this.state.ShowLesson}
-                        count={Object.values(this.state.Groupe[this.state.ShowLesson])[id]} />
+                        cards={lesson} course={this.state.ShowLesson} count={everyLesson.count} />
                 );
             }));
 
