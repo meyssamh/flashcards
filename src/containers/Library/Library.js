@@ -1,28 +1,49 @@
 import React, { Component, Fragment } from 'react';
+import { Grid, MenuItem } from '@material-ui/core';
 import swal from 'sweetalert2';
 
-import Navigationbar from '../../components/Library/Navigationbar/Navigationbar';
-import Sidebar from '../../components/Library/Sidebar/Sidebar';
-import Groupe from '../../components/Library/Groupe/Groupe';
-import Courses from '../../components/Library/Sidebar/Courses/Courses';
-import Spinner from '../../components/UI/Spinner';
 import classes from './Library.css';
+import Header from '../../components/Library/Header/Header';
+import Circular from '../../components/UI/Loading/Circular/Circular';
+import CourseSetting from '../../components/Library/Header/CourseSetting/CourseSetting';
+import LessonSetting from '../../components/Library/Header/LessonSetting/LessonSetting';
+import Cards from '../../components/Library/Cards/Cards';
+import Filter from '../../components/Library/Filter/Filter';
 import axios from '../../axios-orders';
 
-//FIXME: New Style must be done!
 //TODO: Username's logic must be added!
-//TODO: Setting must be added!
 
 class Library extends Component {
     state = {
+        Menu: null,
+        NightMode: false,
+        Night: {
+            Header: '#263238',
+            Main: '#455a64',
+            CardAction: '#263238',
+            Text: 'white',
+            Menu: '#37474f',
+            Delete: '#f50057',
+            Edit: 'white',
+        },
+        Day: {
+            Header: '#64b5f6',
+            Main: 'white',
+            CardAction: '#fffde7',
+            Text: '#263238',
+            Menu: 'white',
+            Delete: '#f50057',
+            Edit: '#90a4ae',
+        },
+        CSetting: false,
+        LSetting: false,
         Lessons: {},
-        ShowLesson: '',
-        Loading: false,
+        ShowLesson: 'All',
+        Loading: true,
         Error: ''
     }
 
     loadLessons = () => {
-        this.setState({ Loading: true });
         return axios.get('/Lessons').then(
             response => {
                 this.setState({
@@ -43,10 +64,6 @@ class Library extends Component {
 
     componentDidMount() {
         this.loadLessons();
-    }
-
-    settingsToggleHandler = () => {
-        // Toggle for Setting in Navigationbar
     }
 
     addCourseHandler = (e) => {
@@ -143,17 +160,14 @@ class Library extends Component {
         })
     }
 
-    //TODO: Delete button must be inactive at first!
-
     showCourseHandler = (e) => {
-        e.preventDefault();
-        const show = e.currentTarget.value;
+        const show = e.target.value;
         this.setState({
             ShowLesson: show
         });
     }
 
-    addGroupeHandler = (e) => {
+    addCardHandler = (e) => {
         e.preventDefault();
         const lessons = { ...this.state.Lessons };
         const courses = Object.keys(lessons).map((name) => name); // to be used in dropdown field
@@ -192,7 +206,7 @@ class Library extends Component {
                             type: 'error',
                             title: 'Oops...',
                             text: 'Lesson already exist!',
-                            backdrop: `rgba(255, 0, 0, 0.2)` 
+                            backdrop: `rgba(255, 0, 0, 0.2)`
                         })
                     } else {
                         const newLessons = {
@@ -223,7 +237,8 @@ class Library extends Component {
         })
     }
 
-    openGroupeHandler = () => {
+    openCardHandler = () => {
+        console.log('open');
         const Lessons = { ...this.state.Lessons };
         axios.post('/Lessons', Lessons).then(
             response => console.log(response)
@@ -233,7 +248,7 @@ class Library extends Component {
         // Open Groupe (window.push or window.location)
     }
 
-    editGroupeHandler = () => {
+    editCardHandler = () => {
         const Lessons = { ...this.state.Lessons };
         axios.post('/Lessons', Lessons).then(
             response => console.log(response)
@@ -243,7 +258,7 @@ class Library extends Component {
         // Edit Groupe
     }
 
-    deleteGroupeHandler = (e) => {
+    deleteCardHandler = (e) => {
         e.preventDefault();
         const course = e.currentTarget.name;
         const lesson = e.currentTarget.value;
@@ -279,6 +294,48 @@ class Library extends Component {
         })
     }
 
+    openMenuHandler = (e) => {
+        this.setState({
+            Menu: e.currentTarget
+        });
+    }
+
+    closeMenuHandler = () => {
+        this.setState({
+            Menu: null
+        });
+    }
+
+    nightModeHandler = () => {
+        this.setState((prevState) => ({
+            NightMode: !prevState.NightMode
+        }))
+    }
+
+    cSettingHandler = () => {
+        this.setState({
+            CSetting: true
+        })
+    }
+
+    closeCSettingHandler = () => {
+        this.setState({
+            CSetting: false
+        })
+    }
+
+    lSettingHandler = () => {
+        this.setState({
+            LSetting: true
+        })
+    }
+
+    closeLSettingHandler = () => {
+        this.setState({
+            LSetting: false
+        })
+    }
+
     signOutHandler = () => {
         const Lessons = { ...this.state.Lessons };
         axios.post('/Lessons', Lessons).then(
@@ -293,6 +350,18 @@ class Library extends Component {
 
     render() {
 
+        let menu = this.state.Menu; // to check for opening the menu in header
+
+        let select = this.state.ShowLesson; // to show the lessons groupe 
+
+        let nightMode = this.state.NightMode; // to check for the night mode
+
+        let day = this.state.Day;
+
+        let night = this.state.Night;
+
+        let mode = nightMode ? night : day;
+
         let err = <div>
             <p>Sorry an Error has occurred:</p>
             <p style={{ color: 'red' }}>{this.state.Error}</p>
@@ -300,34 +369,36 @@ class Library extends Component {
         </div>;
 
         if (this.state.Error.length !== 0) {
+            console.log('oo')
             return err;
         }
 
-        let sidebarCourses = Object.keys(this.state.Lessons)
+        let courses = Object.keys(this.state.Lessons)
             .map(course => {
-                return <Courses key={course} clickedOnCourse={this.showCourseHandler}
-                    children={course} value={course} />
+                return <MenuItem key={course} onClick={this.showCourseHandler}
+                    children={course} name={'ShowLesson'} value={course} />
             });
 
-        sidebarCourses = sidebarCourses.length === 0 ?
-            <p>Please add a Course</p> :
-            sidebarCourses;
+        let disabled = courses.length === 0 ? true : false; // disables the 'delete course' button
 
         let courseItems = 0;
         let showLesson = this.state.ShowLesson === '' ?
             {} :
             { ...this.state.Lessons[this.state.ShowLesson] };
 
-        let groupeLoop = this.state.ShowLesson === '' ?
+        let Card = this.state.ShowLesson === 'All' ? // Filter for showing the lesson cards
             (Object.keys(this.state.Lessons).map(course => {
                 return [...Array(this.state.Lessons[course])].map(name => {
                     return Object.keys(name).map((lesson, id) => {
                         courseItems++; // to check if we have a lesson!
                         let everyLesson = name[lesson];
+                        // have to use courses to check if there are courses!
                         return (
-                            <Groupe clickedOpenGroupe={this.openGroupeHandler} key={course + lesson + id}
-                                clickedEdit={this.editGroupeHandler} clickedDelete={this.deleteGroupeHandler}
-                                cards={lesson} course={course} count={everyLesson.count} />
+                            <Cards clickedOpenCard={this.openCardHandler} key={course + lesson + id}
+                                clickedEdit={this.editCardHandler} clickedDelete={this.deleteCardHandler}
+                                lesson={lesson} course={course} count={everyLesson.count}
+                                cardAction={mode.CardAction} text={mode.Text} del={mode.Delete}
+                                edit={mode.Edit} />
                         );
                     });
                 });
@@ -336,29 +407,49 @@ class Library extends Component {
                 let everyLesson = showLesson[lesson];
                 courseItems++;
                 return (
-                    <Groupe clickedOpenGroupe={this.openGroupeHandler} key={lesson + id}
-                        clickedEdit={this.editGroupeHandler} clickedDelete={this.deleteGroupeHandler}
-                        cards={lesson} course={this.state.ShowLesson} count={everyLesson.count} />
+                    <Cards clickedOpenCard={this.openCardHandler} key={lesson + id}
+                        clickedEdit={this.editCardHandler} clickedDelete={this.deleteCardHandler}
+                        lesson={lesson} course={this.state.ShowLesson} count={everyLesson.count}
+                        cardAction={mode.CardAction} text={mode.Text} del={mode.Delete}
+                        edit={mode.Edit} />
                 );
             }));
 
-        groupeLoop = courseItems === 0 ?
-            <p>Please add a lesson!</p> :
-            groupeLoop;
+        let Study = courses.length === 0 ?
+            <p>Please go to ' Menu > Course setting ' and add a Course!</p> :
+            courseItems === 0 ?
+                <p>Please go to ' Menu > Lesson setting ' and add a Lesson!</p> :
+                Card;
 
-        let content = this.state.Error.length !== 0 ? err : <Spinner />;
+        let height = window.innerHeight - 64;
 
-        if (this.state.Loading === false) {
-            content = <Fragment>
-                <Navigationbar username={'Username'} clickedSettings={this.settingsToggleHandler} />
-                <Sidebar clickedAddCourse={this.addCourseHandler} clickedDeleteCourse={this.deleteCourseHandler}
-                    sidebarCourses={sidebarCourses} />
-                <div className={classes.Groupe}>
-                    <input className={classes.Btn} type={'button'} value={'+'} onClick={this.addGroupeHandler} />
-                    {groupeLoop}
-                </div>
+        let content = this.state.Loading ?
+            <Circular /> // to show loading at beginning
+            :
+            <Fragment>
+                <Header avatar={'MH'} Menu={menu} openMenu={Boolean(menu)} closeMenu={this.closeMenuHandler}
+                    header={mode.Header} clickedCSetting={this.cSettingHandler}
+                    clickedLSetting={this.lSettingHandler} clickedNightMode={this.nightModeHandler}
+                    clickedSignOut={this.signOutHandler} clickedOpenMenu={this.openMenuHandler}
+                />
+                <main className={classes.Main} style={{ background: mode.Main, minHeight: height }}>
+                    <CourseSetting openCSetting={this.state.CSetting} closeCSetting={this.closeCSettingHandler}
+                        addCourse={this.addCourseHandler} deleteCourse={this.deleteCourseHandler}
+                        disabled={disabled}
+                    />
+                    <LessonSetting openLSetting={this.state.LSetting} closeLSetting={this.closeLSettingHandler}
+                        addLesson={this.addCardHandler}
+                    />
+                    <Filter text={mode.Text} select={select} items={courses}
+                        changedFilter={this.showCourseHandler}
+                    />
+                    <div className={classes.Container}>
+                        <Grid container spacing={40}>
+                            {Study}
+                        </Grid>
+                    </div>
+                </main>
             </Fragment>;
-        }
 
         return (
             content

@@ -45,7 +45,7 @@ export const Fav = props => {
     const star = <FontAwesomeIcon icon={faStar} />
 
     return (
-        <button className={classes.Fav} onClick={props.clickedOpenBox}>
+        <button className={classes.Fav} onClick={props.clicked}>
             {star}
         </button>
     );

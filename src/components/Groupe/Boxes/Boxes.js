@@ -5,28 +5,28 @@ import classes from './Boxes.css';
 
 const Boxes = props => {
 
-    const Box = Object.keys(props.cardsCount)
-        .map(box => {
-            return [...Array(props.cardsCount[box])].map(count => {
-                return <td key={box + count} className={classes.Text}>{count} Cards</td>
-            })
-        })
     return (
         <table className={classes.Boxes}>
             <tbody>
                 <tr>
-                    <td className={classes.Box} clicked={props.clickedBox0}><Box0 /></td>
-                    <td className={classes.Box} clicked={props.clickedBox1}><Box1 /></td>
-                    <td className={classes.Box} clicked={props.clickedBox2}><Box2 /></td>
-                    <td className={classes.Box} clicked={props.clickedBox3}><Box3 /></td>
-                    <td className={classes.Box} clicked={props.clickedBox4}><Box4 /></td>
-                    <td className={classes.Box} clicked={props.clickedBox5}><Box5 /></td>
-                    <td className={classes.Box} clicked={props.clickedFav}><Fav /></td>
+                    <td className={classes.Box}><Box0 clicked={props.clickedBox0} /></td>
+                    <td className={classes.Box}><Box1 clicked={props.clickedBox1} /></td>
+                    <td className={classes.Box}><Box2 clicked={props.clickedBox2} /></td>
+                    <td className={classes.Box}><Box3 clicked={props.clickedBox3} /></td>
+                    <td className={classes.Box}><Box4 clicked={props.clickedBox4} /></td>
+                    <td className={classes.Box}><Box5 clicked={props.clickedBox5} /></td>
+                    <td className={classes.Box}><Fav clicked={props.clickedFav} /></td>
                 </tr>
             </tbody>
             <tbody>
                 <tr>
-                    {Box}
+                    <td className={classes.Text}>{props.count0} Cards</td>
+                    <td className={classes.Text}>{props.count1} Cards</td>
+                    <td className={classes.Text}>{props.count2} Cards</td>
+                    <td className={classes.Text}>{props.count3} Cards</td>
+                    <td className={classes.Text}>{props.count4} Cards</td>
+                    <td className={classes.Text}>{props.count5} Cards</td>
+                    <td className={classes.Text}>{props.countF} Cards</td>
                 </tr>
             </tbody>
         </table>
