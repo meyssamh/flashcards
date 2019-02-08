@@ -19,7 +19,7 @@ function filter(props) {
             <Typography component={'div'} className={classes.typography} style={{ color: text }}>
                 Filter :&nbsp;&nbsp;
                 <Select value={select} name={'show'}
-                    onChange={props.changedFilter} style={{ color: text }}
+                    onChange={changedFilter} style={{ color: text }}
                 >
                     <MenuItem value={'All'}>All</MenuItem>
                     {items}

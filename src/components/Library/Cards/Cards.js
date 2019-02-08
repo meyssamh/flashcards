@@ -32,11 +32,13 @@ const styles = {
 
 function cards(props) {
     const { classes, course, lesson, count, clickedOpenCard, clickedEdit,
-        clickedDelete, cardAction, text, del, edit, ...other } = props;
+        clickedDelete, cardAction, text, del, edit, name, value, ...other } = props;
     return (
         <Grid item xs={12} sm={6} md={4} lg={4} xl={3}>
             <Card className={classes.card} style={{border: 'green'}} {...other}>
-                <CardActionArea onClick={clickedOpenCard} style={{background: cardAction}}>
+                <CardActionArea onClick={clickedOpenCard} style={{background: cardAction}}
+                    name={name} value={value}
+                >
                     <CardContent className={classes.cardContent}>
                         <Typography gutterBottom variant={'h4'} style={{color: text}}>
                             {lesson}
@@ -58,8 +60,8 @@ function cards(props) {
                         <EditIcon />
                     </IconButton>
                     <IconButton className={classes.delete} title={'Delete'}
-                        aria-label={'Delete'} style={{color: del}}
-                        onClick={clickedDelete}
+                        aria-label={'Delete'} style={{color: del}} value={course}
+                        onClick={clickedDelete} name={lesson}
                     >
                         <DeleteIcon />
                     </IconButton>

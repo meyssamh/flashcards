@@ -1,24 +1,199 @@
 {
-  "Coursename": {
-    "0": "IT",
-    "1": "BWL",
-    "2": "VWL"
-  },
-  "Groupe": {
+  "Lessons": {
     "IT": {
-      "Java": 17,
-      "JavaScript": 15,
-      "C++": 0
+      "Java": {
+        "count": 10,
+        "cards": {
+          "1": {
+            "box": 0,
+            "type": 0,
+            "favorite": false,
+            "question": "Lorem?",
+            "anwser": "Lorem!",
+            "picture": ""
+          },
+          "2": {
+            "box": 5,
+            "type": 0,
+            "favorite": false,
+            "question": "Lorem?",
+            "anwser": "Lorem!",
+            "picture": ""
+          },
+          "3": {
+            "box": 2,
+            "type": 0,
+            "favorite": false,
+            "question": "Lorem?",
+            "anwser": "Lorem!",
+            "picture": ""
+          },
+          "4": {
+            "box": 1,
+            "type": 0,
+            "favorite": false,
+            "question": "Lorem?",
+            "anwser": "Lorem!",
+            "picture": ""
+          },
+          "5": {
+            "box": 4,
+            "type": 0,
+            "favorite": true,
+            "question": "Lorem?",
+            "anwser": "Lorem!",
+            "picture": ""
+          },
+          "6": {
+            "box": 4,
+            "type": 0,
+            "favorite": false,
+            "question": "Lorem?",
+            "anwser": "Lorem!",
+            "picture": ""
+          },
+          "7": {
+            "box": 2,
+            "type": 0,
+            "favorite": false,
+            "question": "Lorem?",
+            "anwser": "Lorem!",
+            "picture": ""
+          },
+          "8": {
+            "box": 1,
+            "type": 0,
+            "favorite": false,
+            "question": "Lorem?",
+            "anwser": "Lorem!",
+            "picture": ""
+          },
+          "9": {
+            "box": 1,
+            "type": 0,
+            "favorite": true,
+            "question": "Lorem?",
+            "anwser": "Lorem!",
+            "picture": ""
+          },
+          "10": {
+            "box": 0,
+            "type": 0,
+            "favorite": false,
+            "question": "Lorem?",
+            "anwser": "Lorem!",
+            "picture": ""
+          }
+        }
+      },
+      "JavaScript": {
+        "count": 1,
+        "cards": {
+          "1": {
+            "box": 0,
+            "type": 0,
+            "favorite": false,
+            "question": "",
+            "anwser": "",
+            "picture": ""
+          }
+        }
+      },
+      "C++": {
+        "count": 1,
+        "cards": {
+          "1": {
+            "box": 0,
+            "type": 0,
+            "favorite": false,
+            "question": "",
+            "anwser": "",
+            "picture": ""
+          }
+        }
+      }
     },
     "BWL": {
-      "Marketing": 25,
-      "Steuerlehre": 100,
-      "BWL": 76
+      "Marketing": {
+        "count": 1,
+        "cards": {
+          "1": {
+            "box": 0,
+            "type": 0,
+            "favorite": false,
+            "question": "",
+            "anwser": "",
+            "picture": ""
+          }
+        }
+      },
+      "Steuerlehre": {
+        "count": 1,
+        "cards": {
+          "1": {
+            "box": 0,
+            "type": 0,
+            "favorite": false,
+            "question": "",
+            "anwser": "",
+            "picture": ""
+          }
+        }
+      },
+      "BWL": {
+        "count": 1,
+        "cards": {
+          "1": {
+            "box": 0,
+            "type": 0,
+            "favorite": false,
+            "question": "",
+            "anwser": "",
+            "picture": ""
+          }
+        }
+      }
     },
     "VWL": {
-      "Makro 1": 55,
-      "Makro 2": 93,
-      "VWL": 80
+      "Makro 1": {
+        "count": 1,
+        "cards": {
+          "1": {
+            "box": 0,
+            "type": 0,
+            "favorite": false,
+            "question": "",
+            "anwser": "",
+            "picture": ""
+          }
+        }
+      },
+      "Makro 2": {
+        "count": 1,
+        "cards": {
+          "1": {
+            "box": 0,
+            "type": 0,
+            "favorite": false,
+            "question": "",
+            "anwser": "",
+            "picture": ""
+          }
+        }
+      },
+      "VWL": {
+        "count": 1,
+        "cards": {
+          "1": {
+            "box": 0,
+            "type": 0,
+            "favorite": false,
+            "question": "",
+            "anwser": "",
+            "picture": ""
+          }
+        }
+      }
     }
   }
 }

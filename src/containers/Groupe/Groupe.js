@@ -5,7 +5,6 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import classes from './Groupe.css';
 import Progressbar from '../../components/Groupe/Progressbar/Progressbar';
 import Boxes from '../../components/Groupe/Boxes/Boxes';
-import Spinner from '../../components/UI/Spinner';
 import axios from '../../axios-orders';
 
 //FIXME: New Style must be done!
@@ -22,7 +21,7 @@ class Groupe extends Component {
         Four: {},
         Five: {},
         Favorite: {},
-        Loading: true,
+        Loading:false,
         Error: ''
     }
 
@@ -153,7 +152,7 @@ class Groupe extends Component {
 
         const add = <FontAwesomeIcon icon={faPlus} />;
 
-        let content = this.state.Error.length !== 0 ? err : <Spinner />;
+        let content= {};
 
         if (this.state.Loading === false) {
             content = <div className={classes.Groupe}>

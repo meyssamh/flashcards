@@ -1,20 +1,13 @@
 import React from 'react';
 import {
-    IconButton, Button, Dialog, DialogContent, DialogContentText,
+    Button, Dialog, DialogContent, DialogContentText,
     DialogActions, DialogTitle, withMobileDialog
 } from '@material-ui/core';
-import ClearIcon from '@material-ui/icons/Clear';
 
 const courseSetting = (props) => (
     <Dialog
-        open={props.openCSetting}
-        onClose={props.closeCSetting}
+        open={props.openCSetting} onClose={props.closeCSetting}
     >
-        <DialogActions>
-            <IconButton onClick={props.closeCSetting}>
-                <ClearIcon />
-            </IconButton>
-        </DialogActions>
         <DialogTitle>Course Setting</DialogTitle>
         <DialogContent>
             <DialogContentText>
@@ -22,10 +15,10 @@ const courseSetting = (props) => (
             </DialogContentText>
         </DialogContent>
         <DialogActions>
-            <Button onClick={props.addCourse} variant={'outlined'}>Add Course</Button>
-            <Button onClick={props.deleteCourse} variant={'outlined'} color={'secondary'}
-                disabled={props.disabled}
-            >Delete Course</Button>
+            <Button onClick={props.addCourse}>Add Course</Button>
+            <Button onClick={props.deleteCourse} color={'secondary'} disabled={props.disabled}>
+            Delete Course
+            </Button>
         </DialogActions>
     </Dialog>
 );

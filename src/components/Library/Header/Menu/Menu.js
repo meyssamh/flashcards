@@ -10,7 +10,7 @@ const menu = props => (
         style={{padding: 0, margin: 0}}
     >
         <MenuItem onClick={props.clickedCSetting}>Course setting</MenuItem>
-        <MenuItem onClick={props.clickedLSetting}>Lesson setting</MenuItem>
+        <MenuItem onClick={props.clickedLSetting} disabled={props.disabled}>Lesson setting</MenuItem>
         <MenuItem onClick={props.clickedNightMode}>Night mode</MenuItem>
         <MenuItem onClick={props.clickedSignOut}>Sign out</MenuItem>
     </Menu>
