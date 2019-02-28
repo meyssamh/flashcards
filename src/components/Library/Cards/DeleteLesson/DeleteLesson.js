@@ -14,7 +14,7 @@ const deleteCourse = (props) => {
             </DialogContent>
             <DialogActions>
                 <Button onClick={props.clickedDelete} color={'secondary'}>
-                   Yes
+                    Yes
                 </Button>
                 <Button onClick={props.closeDeleteLesson}>No</Button>
             </DialogActions>

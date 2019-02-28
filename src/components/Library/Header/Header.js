@@ -6,9 +6,6 @@ import MoreVert from '@material-ui/icons/MoreVert';
 import Menu from './Menu/Menu';
 
 const styles = {
-    div: {
-        flexGrow: 1
-    },
     typography: {
         flexGrow: 1
     }
@@ -20,12 +17,12 @@ function header(props) {
     return (
         <AppBar style={{background: header}}>
             <Toolbar>
-                <Avatar className={classes.avatar}>{avatar}</Avatar>
+                <Avatar>{avatar}</Avatar>
                 <Typography variant={'h6'} color={'inherit'} className={classes.typography}
                     align={'center'} inline={'true'} noWrap={true}
                 >Flashcard web Application
                 </Typography>
-                <IconButton title={'Menu'} aria-label={'Menu'} className={classes.iconbutton}
+                <IconButton title={'Menu'} aria-label={'Menu'}
                     aria-haspopup={'true'} onClick={props.clickedOpenMenu} color={'inherit'}>
                     <MoreVert />
                 </IconButton>

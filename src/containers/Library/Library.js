@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Grid, MenuItem, TextField } from '@material-ui/core';
-import swal from 'sweetalert2';
+import { connect } from 'react-redux';
 
 import classes from './Library.css';
 import Header from '../../components/Library/Header/Header';
@@ -22,13 +22,13 @@ import Cards from '../../components/Library/Cards/Cards';
 import OpenLesson from '../../components/Library/Cards/OpenLesson/OpenLesson';
 import Filter from '../../components/Library/Filter/Filter';
 import axios from '../../axios-orders';
+import * as actions from '../../store/actions/index';
 
 //TODO: Username's logic must be added!
-
+//TODO: this.props.history.push('/cards');
 class Library extends Component {
     state = {
         Menu: null,
-        NightMode: false,
         Night: {
             Header: '#263238',
             Main: '#455a64',
@@ -57,7 +57,6 @@ class Library extends Component {
         AddLesson: false,
         SelectCourse: 'None',
         NewLesson: '',
-        Lessons: {},
         DeleteLesson: {
             show: false,
             course: '',
@@ -73,42 +72,25 @@ class Library extends Component {
         },
         OpenLesson: {
             show: false,
+            course: '',
             title: '',
             box0: 0,
+            disableBox0: true,
             box1: 0,
+            disableBox1: true,
             box2: 0,
+            disableBox2: true,
             box3: 0,
+            disableBox3: true,
             box4: 0,
+            disableBox4: true,
             box5: 0,
-            fav: 0
+            disableBox5: true,
+            fav: 0,
+            disableFav: true
         },
-        ShowLesson: 'All',
-        Loading: true,
-        Error: ''
+        ShowLesson: 'All'
     };
-
-    loadLessons = () => {
-        return axios.get('/Lessons').then(
-            response => {
-                this.setState({
-                    Lessons: response.data,
-                    Loading: false
-                });
-            }
-        ).catch(
-            error => {
-                console.log(error.message);
-                this.setState({
-                    Error: `${error.message}`,
-                    Loading: false
-                });
-            }
-        );
-    }
-
-    componentDidMount() {
-        this.loadLessons();
-    }
 
     addCourseHandler = () => {
         this.setState({
@@ -130,8 +112,7 @@ class Library extends Component {
 
     finalAddCourseHandler = () => {
         const newCourse = this.state.NewCourse;
-        const lessons = { ...this.state.Lessons, [newCourse]: {} };
-        if (this.state.Lessons[newCourse]) {
+        if (this.props.Lessons[newCourse]) {
             this.setState({
                 Menu: null,
                 AddCourse: false,
@@ -141,11 +122,11 @@ class Library extends Component {
                 }
             });
         } else {
+            this.props.onAddCourse(newCourse)
             this.setState({
                 Menu: null,
                 AddCourse: false,
                 CSetting: false,
-                Lessons: lessons,
                 Snackbars: {
                     AddCourse: true
                 }
@@ -178,19 +159,30 @@ class Library extends Component {
     }
 
     finalDeleteCourseHandler = () => {
-        const lessons = { ...this.state.Lessons };
-        const selected = this.state.SelectedCourse;
-        delete lessons[selected];
-        this.setState({
-            Menu: null,
-            CSetting: false,
-            Caution: false,
-            DeleteCourse: false,
-            Lessons: lessons,
-            Snackbars: {
-                DeleteCourse: true
-            }
-        });
+        const course = this.state.SelectedCourse;
+        this.props.onDeleteCourse(course);
+        if (this.state.ShowLesson === course) {
+            this.setState({
+                Menu: null,
+                ShowLesson: 'All',
+                CSetting: false,
+                Caution: false,
+                DeleteCourse: false,
+                Snackbars: {
+                    DeleteCourse: true
+                }
+            });
+        } else {
+            this.setState({
+                Menu: null,
+                CSetting: false,
+                Caution: false,
+                DeleteCourse: false,
+                Snackbars: {
+                    DeleteCourse: true
+                }
+            });
+        }
     }
 
     selectDeleteHandler = (e) => {
@@ -227,7 +219,7 @@ class Library extends Component {
     }
 
     addLessonHandler = () => {
-        const lessons = { ...this.state.Lessons };
+        const lessons = { ...this.props.Lessons };
         const course = this.state.SelectCourse;
         const lesson = this.state.NewLesson;
         const LessonsKey = Object.keys({ ...lessons[course] }).map((name) => name);
@@ -243,18 +235,11 @@ class Library extends Component {
                     }
                 });
             } else {
-                const newLessons = {
-                    ...lessons[course], [lesson]: {
-                        count: 0,
-                        cards: {}
-                    }
-                };
-                lessons[course] = newLessons;
+                this.props.onAddLesson(course, lesson)
                 this.setState({
                     Menu: null,
                     AddLesson: false,
                     LSetting: false,
-                    Lessons: lessons,
                     Snackbars: {
                         AddLesson: true
                     }
@@ -270,78 +255,8 @@ class Library extends Component {
         });
     }
 
-    addCardHandler = (e) => {
-        e.preventDefault();
-        const lessons = { ...this.state.Lessons };
-        const courses = Object.keys(lessons).map((name) => name); // to be used in dropdown field
-        swal.mixin({
-            input: 'text',
-            confirmButtonText: 'Next',
-            showCancelButton: true,
-            progressSteps: ['1', '2']
-        }).queue([
-            {
-                text: 'Choose your course:',
-                input: 'select',
-                inputPlaceholder: 'Your course',
-                inputOptions: courses
-            },
-            {
-                text: 'Enter the name of your lesson:',
-                inputPlaceholder: 'Your lesson',
-                input: 'text'
-            },
-        ]).then((result) => {
-            if (result.dismiss === swal.DismissReason.cancel) {
-                return null;
-            } else if (result.dismiss === swal.DismissReason.backdrop) {
-                return null;
-            } else if (result.dismiss === swal.DismissReason.esc) {
-                return null;
-            } else if (result.value[0] !== '' && result.value[1] !== '') {
-                const course = courses[result.value[0]];
-                const lesson = result.value[1];
-                const LessonsKey = Object.keys({ ...lessons[course] }).map((name) => name);
-                let i = 0;
-                do {
-                    if (LessonsKey[i] === lesson) {
-                        swal({
-                            type: 'error',
-                            title: 'Oops...',
-                            text: 'Lesson already exist!',
-                            backdrop: `rgba(255, 0, 0, 0.2)`
-                        })
-                    } else {
-                        const newLessons = {
-                            ...lessons[course], [lesson]: {
-                                count: 0,
-                                cards: {}
-                            }
-                        };
-                        lessons[course] = newLessons;
-                        this.setState({
-                            Lessons: lessons
-                        });
-                        swal({
-                            title: 'Done!',
-                            text: 'Your lessen has been added.',
-                            type: 'success',
-                            showConfirmButton: false,
-                            toast: true,
-                            animation: false,
-                            position: 'top-end',
-                            customClass: 'animated slideInDown',
-                            timer: 2000
-                        })
-                    }
-                    i++;
-                } while (i in LessonsKey);
-            };
-        })
-    }
-
     openCardHandler = (e) => {
-        const lessons = { ...this.state.Lessons };
+        const lessons = { ...this.props.Lessons };
         const lesson = e.currentTarget.name;
         const course = e.currentTarget.value;
         const clickedCourse = { ...lessons[course] };
@@ -384,26 +299,34 @@ class Library extends Component {
         this.setState({
             OpenLesson: {
                 show: true,
+                course: course,
                 title: lesson,
                 box0: countCardsHandler(zero),
+                disableBox0: countCardsHandler(zero) === 0,
                 box1: countCardsHandler(one),
+                disableBox1: countCardsHandler(one) === 0,
                 box2: countCardsHandler(two),
+                disableBox2: countCardsHandler(two) === 0,
                 box3: countCardsHandler(three),
+                disableBox3: countCardsHandler(three) === 0,
                 box4: countCardsHandler(four),
+                disableBox4: countCardsHandler(four) === 0,
                 box5: countCardsHandler(five),
-                fav: countCardsHandler(favorite)
+                disableBox5: countCardsHandler(five) === 0,
+                fav: countCardsHandler(favorite),
+                disableFav: countCardsHandler(favorite) === 0,
             }
         });
-        const Lessons = { ...this.state.Lessons };
-        axios.post('/Lessons', Lessons).then(
-            response => console.log(response)
-        ).catch(
-            error => console.log(error)
-        );
+        // const Lessons = { ...this.props.Lessons };
+        // axios.post('/Lessons', Lessons).then(
+        //     response => console.log(response)
+        // ).catch(
+        //     error => console.log(error)
+        // );
     }
 
     editCardHandler = () => {
-        const Lessons = { ...this.state.Lessons };
+        const Lessons = { ...this.props.Lessons };
         axios.post('/Lessons', Lessons).then(
             response => console.log(response)
         ).catch(
@@ -437,19 +360,15 @@ class Library extends Component {
     finalDeleteLessenHandler = () => {
         const course = this.state.DeleteLesson.course;
         const lesson = this.state.DeleteLesson.lesson;
-        const newLessons = { ...this.state.Lessons[course] };
-        const oldLessons = { ...this.state.Lessons };
-        delete newLessons[lesson];
-        oldLessons[course] = newLessons;
+        this.props.onDeleteLesson(course, lesson);
         this.setState({
-            Lessons: oldLessons,
             DeleteLesson: {
                 show: false,
                 course: '',
                 lesson: '',
-                Snackbars: {
-                    DeleteLesson: true
-                }
+            },
+            Snackbars: {
+                DeleteLesson: true
             }
         });
     }
@@ -464,12 +383,6 @@ class Library extends Component {
         this.setState({
             Menu: null
         });
-    }
-
-    nightModeHandler = () => {
-        this.setState((prevState) => ({
-            NightMode: !prevState.NightMode
-        }));
     }
 
     cSettingHandler = () => {
@@ -509,24 +422,52 @@ class Library extends Component {
         });
     }
 
+    openLessonHandler = (e) => {
+        const lessons = { ...this.props.Lessons };
+        const course = { ...lessons[this.state.OpenLesson.course] };
+        const lesson = { ...course[this.state.OpenLesson.title] };
+        const number = e.currentTarget.value;
+        let selectedBox = {};
+        Object.keys(lesson.cards).map(cards => {
+            let block = lesson.cards[cards];
+            if (block.box === parseInt(number)) {
+                return selectedBox = { ...selectedBox, [cards]: block };
+            } else {
+                return null;
+            }
+        });
+        this.props.onOpenLesson(selectedBox, course, lesson);
+        this.props.history.push('/cards');
+    }
+
+    openFavoriteHandler = () => {
+        const lessons = { ...this.props.Lessons };
+        const course = { ...lessons[this.state.OpenLesson.course] };
+        const lesson = { ...course[this.state.OpenLesson.title] };
+        let selectedBox = {};
+        Object.keys(lesson.cards).map(cards => {
+            let block = lesson.cards[cards];
+            if (block.favorite) {
+                return selectedBox = { ...selectedBox, [cards]: block };
+            } else {
+                return null;
+            }
+        });
+        this.props.onOpenLesson(selectedBox);
+        this.props.history.push('/cards');
+    }
+
     closeLessonHandler = () => {
         this.setState({
             OpenLesson: {
                 show: false,
-                title: '',
-                box0: 0,
-                box1: 0,
-                box2: 0,
-                box3: 0,
-                box4: 0,
-                box5: 0,
-                fav: 0
+                title: ''
             }
         });
     }
 
     signOutHandler = () => {
-        const Lessons = { ...this.state.Lessons };
+        const Lessons = { ...this.props.Lessons };
         axios.post('/Lessons', Lessons).then(
             response => console.log(response)
         ).catch(
@@ -538,6 +479,10 @@ class Library extends Component {
     //TODO: add componentWillUnmount
 
     render() {
+        
+        if (this.props.Fetched === false) {
+            this.props.onFetchDataStart();
+        }
 
         let menu = this.state.Menu; // to check for opening the menu in header
 
@@ -551,7 +496,7 @@ class Library extends Component {
 
         let disableDelete = deleteSelected === 'None' ? true : false; // to disable delete button
 
-        let nightMode = this.state.NightMode; // to check for the night mode
+        let nightMode = this.props.NightMode; // to check for the night mode
 
         let day = this.state.Day;
 
@@ -561,16 +506,16 @@ class Library extends Component {
 
         let err = <div>
             <p>Sorry an Error has occurred:</p>
-            <p style={{ color: 'red' }}>{this.state.Error}</p>
+            <p style={{ color: 'red' }}>{this.props.Error}</p>
             <p>Please Try again later!</p>
         </div>;
 
-        if (this.state.Error.length !== 0) {
+        if (this.props.Error.length !== 0) {
             console.log('oo')
             return err;
         }
 
-        let courses = Object.keys(this.state.Lessons)
+        let courses = Object.keys(this.props.Lessons)
             .map(course => {
                 return <MenuItem key={course} onClick={this.showCourseHandler}
                     children={course} name={'ShowLesson'} value={course} />
@@ -591,11 +536,11 @@ class Library extends Component {
         let courseItems = 0;
         let showLesson = this.state.ShowLesson === 'All' ?
             {} :
-            { ...this.state.Lessons[this.state.ShowLesson] };
+            { ...this.props.Lessons[this.state.ShowLesson] };
 
         let Card = this.state.ShowLesson === 'All' ? // Filter for showing the lesson cards
-            (Object.keys(this.state.Lessons).map(course => {
-                return [...Array(this.state.Lessons[course])].map(name => {
+            (Object.keys(this.props.Lessons).map(course => {
+                return [...Array(this.props.Lessons[course])].map(name => {
                     return Object.keys(name).map((lesson, id) => {
                         courseItems++; // to check if we have a lesson!
                         let everyLesson = name[lesson];
@@ -603,9 +548,10 @@ class Library extends Component {
                         return (
                             <Cards clickedOpenCard={this.openCardHandler} key={course + lesson + id}
                                 clickedEdit={this.editCardHandler} clickedDelete={this.deleteLessonHandler}
-                                lesson={lesson} course={course} count={everyLesson.count}
-                                cardAction={mode.CardAction} text={mode.Text} del={mode.Delete}
-                                edit={mode.Edit} name={lesson} value={course} />
+                                lesson={lesson} course={course} count={everyLesson.count} text={mode.Text}
+                                cardAction={mode.CardAction} del={mode.Delete} title={`${lesson} - ${course}`}
+                                edit={mode.Edit} name={lesson} value={course} disabled={everyLesson.count === 0}
+                            />
                         );
                     });
                 });
@@ -618,7 +564,9 @@ class Library extends Component {
                         clickedEdit={this.editCardHandler} clickedDelete={this.deleteLessonHandler}
                         lesson={lesson} course={this.state.ShowLesson} count={everyLesson.count}
                         cardAction={mode.CardAction} text={mode.Text} del={mode.Delete}
-                        edit={mode.Edit} />
+                        edit={mode.Edit} disabled={everyLesson.count === 0}
+                        title={`${lesson} - ${this.state.ShowLesson}`}
+                    />
                 );
             }));
 
@@ -630,13 +578,13 @@ class Library extends Component {
 
         let height = window.innerHeight - 64;
 
-        let content = this.state.Loading ?
+        let content = this.props.Loading ?
             <Circular /> // to show loading at beginning
             :
             <Fragment>
                 <Header avatar={'MH'} Menu={menu} openMenu={Boolean(menu)} closeMenu={this.closeMenuHandler}
                     header={mode.Header} clickedCSetting={this.cSettingHandler} disabled={disabled}
-                    clickedLSetting={this.lSettingHandler} clickedNightMode={this.nightModeHandler}
+                    clickedLSetting={this.lSettingHandler} clickedNightMode={this.props.onNightMode}
                     clickedSignOut={this.signOutHandler} clickedOpenMenu={this.openMenuHandler}
                 />
                 <main className={classes.Main} style={{ background: mode.Main, minHeight: height }}>
@@ -689,6 +637,13 @@ class Library extends Component {
                         box1={this.state.OpenLesson.box1} box2={this.state.OpenLesson.box2}
                         box3={this.state.OpenLesson.box3} box4={this.state.OpenLesson.box4}
                         box5={this.state.OpenLesson.box5} fav={this.state.OpenLesson.fav}
+                        disableBox0={this.state.OpenLesson.disableBox0} clicked0={this.openLessonHandler}
+                        disableBox1={this.state.OpenLesson.disableBox1} clicked1={this.openLessonHandler}
+                        disableBox2={this.state.OpenLesson.disableBox2} clicked2={this.openLessonHandler}
+                        disableBox3={this.state.OpenLesson.disableBox3} clicked3={this.openLessonHandler}
+                        disableBox4={this.state.OpenLesson.disableBox4} clicked4={this.openLessonHandler}
+                        disableBox5={this.state.OpenLesson.disableBox5} clicked5={this.openLessonHandler}
+                        disableFav={this.state.OpenLesson.disableFav} clickedF={this.openFavoriteHandler}
                     />
                     <Filter text={mode.Text} select={select} items={courses}
                         changedFilter={this.showCourseHandler}
@@ -707,4 +662,26 @@ class Library extends Component {
     }
 }
 
-export default Library;
+const mapStateToProps = state => {
+    return {
+        Fetched: state.Library.Fetched,
+        Lessons: state.Library.Lessons,
+        NightMode: state.Library.NightMode,
+        Loading: state.Library.Loading,
+        Error: state.Library.Error
+    };
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onNightMode: () => dispatch(actions.nightMode()),
+        onFetchDataStart: () => dispatch(actions.fetchDataStart()),
+        onAddCourse: (courseName) => dispatch(actions.addCourse(courseName)),
+        onDeleteCourse: (courseName) => dispatch(actions.deleteCourse(courseName)),
+        onAddLesson: (courseName, lessonName) => dispatch(actions.addLesson(courseName, lessonName)),
+        onDeleteLesson: (courseName, lessonName) => dispatch(actions.deleteLesson(courseName, lessonName)),
+        onOpenLesson: (block, course, lesson) => dispatch(actions.initBox(block, course, lesson))
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Library);

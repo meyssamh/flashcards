@@ -31,36 +31,40 @@ const styles = {
 }
 
 function cards(props) {
-    const { classes, course, lesson, count, clickedOpenCard, clickedEdit,
-        clickedDelete, cardAction, text, del, edit, name, value, ...other } = props;
+    const { classes, course, lesson, count, clickedOpenCard, clickedEdit, disabled,
+        clickedDelete, cardAction, text, del, edit, name, value, title, ...other } = props;
     return (
         <Grid item xs={12} sm={6} md={4} lg={4} xl={3}>
-            <Card className={classes.card} style={{border: 'green'}} {...other}>
-                <CardActionArea onClick={clickedOpenCard} style={{background: cardAction}}
-                    name={name} value={value}
+            <Card className={classes.card} style={{ border: 'green' }} {...other}>
+                <CardActionArea onClick={clickedOpenCard} style={{ background: cardAction }}
+                    name={name} value={value} disabled={disabled} title={title}
                 >
                     <CardContent className={classes.cardContent}>
-                        <Typography gutterBottom variant={'h4'} style={{color: text}}>
+                        <Typography gutterBottom variant={'h4'} style={{ color: text }}>
                             {lesson}
                         </Typography>
-                        <Typography gutterBottom variant={'h6'} component={'h2'} style={{color: text}}>
+                        <Typography gutterBottom variant={'h6'} component={'h2'} style={{ color: text }}>
                             {course}
                         </Typography>
-                        <Typography gutterBottom variant={'caption'} component={'h2'} style={{color: text}}>
-                            {count} Cards
-                        </Typography>
+                        <Typography gutterBottom variant={'caption'} component={'h2'} style={{ color: text }}
+                            children={
+                                count === 0 ?
+                                    `This lesson is disabled. Please click on edit and add some cards!` :
+                                    `${count} Cards`
+                            }
+                        />
                     </CardContent>
                 </CardActionArea>
                 <Divider variant="middle" />
-                <CardActions className={classes.cardActions} style={{background: cardAction}}>
+                <CardActions className={classes.cardActions} style={{ background: cardAction }}>
                     <IconButton className={classes.edit} title={'Edit'}
-                        aria-label={'Edit'} style={{color: edit}}
+                        aria-label={'Edit'} style={{ color: edit }}
                         onClick={clickedEdit}
                     >
                         <EditIcon />
                     </IconButton>
                     <IconButton className={classes.delete} title={'Delete'}
-                        aria-label={'Delete'} style={{color: del}} value={course}
+                        aria-label={'Delete'} style={{ color: del }} value={course}
                         onClick={clickedDelete} name={lesson}
                     >
                         <DeleteIcon />
