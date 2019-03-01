@@ -8,12 +8,14 @@ import thunk from 'redux-thunk';
 import App from './App';
 import LibraryReducer from './store/reducers/LibraryReducer';
 import CardsReducer from './store/reducers/CardsReducer';
+import EditReducer from './store/reducers/EditReducer';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
 const reducers = combineReducers({
     Library: LibraryReducer,
-    Cards: CardsReducer
+    Cards: CardsReducer,
+    Edit: EditReducer
 });
 
 const store = createStore(reducers, applyMiddleware(thunk));

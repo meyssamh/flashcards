@@ -7,7 +7,7 @@
           "1": {
             "box": 0,
             "type": 0,
-            "favorite": false,
+            "favorite": true,
             "question": "Lorem kura?",
             "answer": "Lorem hurra!",
             "picture": ""
@@ -21,9 +21,9 @@
             "picture": ""
           },
           "3": {
-            "box": 2,
+            "box": 1,
             "type": 0,
-            "favorite": false,
+            "favorite": true,
             "question": "Lorem?",
             "answer": "Lorem!",
             "picture": ""
@@ -31,16 +31,16 @@
           "4": {
             "box": 1,
             "type": 0,
-            "favorite": false,
-            "question": "Lorem?",
+            "favorite": true,
+            "question": "Lorem lollita?",
             "answer": "Lorem!",
             "picture": ""
           },
           "5": {
-            "box": 4,
+            "box": 1,
             "type": 0,
-            "favorite": true,
-            "question": "Lorem?",
+            "favorite": false,
+            "question": "Lorem korridas?",
             "answer": "Lorem!",
             "picture": ""
           },

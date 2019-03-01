@@ -1,7 +1,6 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    Fetched: false,
     Lessons: {},
     NightMode: false,
     Loading: true,
@@ -21,7 +20,6 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_DATA_SUCCESS:
             return {
                 ...state,
-                Fetched: true,
                 Lessons: action.data,
                 Loading: false
             };
@@ -31,6 +29,15 @@ const reducer = (state = initialState, action) => {
                 Error: action.error.message,
                 Loading: false
             };
+        case actionTypes.POST_DATA:
+            return {
+                ...state
+            }
+        case actionTypes.POST_DATA_FAIL:
+            return {
+                ...state,
+                Error: action.error.message
+            }
         case actionTypes.ADD_COURSE:
             return {
                 ...state,

@@ -21,11 +21,9 @@ import DeleteCourseS from '../../components/Library/Header/CourseSetting/DeleteC
 import Cards from '../../components/Library/Cards/Cards';
 import OpenLesson from '../../components/Library/Cards/OpenLesson/OpenLesson';
 import Filter from '../../components/Library/Filter/Filter';
-import axios from '../../axios-orders';
 import * as actions from '../../store/actions/index';
 
 //TODO: Username's logic must be added!
-//TODO: this.props.history.push('/cards');
 class Library extends Component {
     state = {
         Menu: null,
@@ -317,22 +315,15 @@ class Library extends Component {
                 disableFav: countCardsHandler(favorite) === 0,
             }
         });
-        // const Lessons = { ...this.props.Lessons };
-        // axios.post('/Lessons', Lessons).then(
-        //     response => console.log(response)
-        // ).catch(
-        //     error => console.log(error)
-        // );
     }
 
-    editCardHandler = () => {
-        const Lessons = { ...this.props.Lessons };
-        axios.post('/Lessons', Lessons).then(
-            response => console.log(response)
-        ).catch(
-            error => console.log(error)
-        );
-        // Edit Groupe
+    editCardHandler = (course, lesson) => {
+        const lessons = { ...this.props.Lessons };
+        const editCourse = { ...lessons[course] };
+        const editLesson = { ...editCourse[lesson] };
+        const editAble = editLesson.cards;
+        this.props.history.push('/edit');
+        this.props.onInitEdit(editAble);
     }
 
     deleteLessonHandler = (e) => {
@@ -453,7 +444,7 @@ class Library extends Component {
                 return null;
             }
         });
-        this.props.onOpenLesson(selectedBox);
+        this.props.onOpenLesson(selectedBox, course, lesson);
         this.props.history.push('/cards');
     }
 
@@ -467,20 +458,14 @@ class Library extends Component {
     }
 
     signOutHandler = () => {
-        const Lessons = { ...this.props.Lessons };
-        axios.post('/Lessons', Lessons).then(
-            response => console.log(response)
-        ).catch(
-            error => console.log(error)
-        );
+        const lessons = { ...this.props.Lessons };
+        this.props.onPostData(lessons);
         //Signout method comes here!
     }
 
-    //TODO: add componentWillUnmount
-
     render() {
-        
-        if (this.props.Fetched === false) {
+
+        if (this.props.Loading) {
             this.props.onFetchDataStart();
         }
 
@@ -547,10 +532,11 @@ class Library extends Component {
                         // have to use courses to check if there are courses!
                         return (
                             <Cards clickedOpenCard={this.openCardHandler} key={course + lesson + id}
-                                clickedEdit={this.editCardHandler} clickedDelete={this.deleteLessonHandler}
-                                lesson={lesson} course={course} count={everyLesson.count} text={mode.Text}
-                                cardAction={mode.CardAction} del={mode.Delete} title={`${lesson} - ${course}`}
-                                edit={mode.Edit} name={lesson} value={course} disabled={everyLesson.count === 0}
+                                clickedEdit={() => this.editCardHandler(course, lesson)}
+                                clickedDelete={this.deleteLessonHandler} lesson={lesson} course={course}
+                                count={everyLesson.count} text={mode.Text} cardAction={mode.CardAction}
+                                del={mode.Delete} title={`${lesson} - ${course}`} edit={mode.Edit}
+                                name={lesson} value={course} disabled={everyLesson.count === 0}
                             />
                         );
                     });
@@ -561,10 +547,10 @@ class Library extends Component {
                 courseItems++;
                 return (
                     <Cards clickedOpenCard={this.openCardHandler} key={lesson + id}
-                        clickedEdit={this.editCardHandler} clickedDelete={this.deleteLessonHandler}
-                        lesson={lesson} course={this.state.ShowLesson} count={everyLesson.count}
-                        cardAction={mode.CardAction} text={mode.Text} del={mode.Delete}
-                        edit={mode.Edit} disabled={everyLesson.count === 0}
+                        clickedEdit={() => this.editCardHandler(this.state.ShowLesson, lesson)}
+                        clickedDelete={this.deleteLessonHandler} lesson={lesson}
+                        course={this.state.ShowLesson} count={everyLesson.count} cardAction={mode.CardAction}
+                        text={mode.Text} del={mode.Delete} edit={mode.Edit} disabled={everyLesson.count === 0}
                         title={`${lesson} - ${this.state.ShowLesson}`}
                     />
                 );
@@ -680,7 +666,9 @@ const mapDispatchToProps = dispatch => {
         onDeleteCourse: (courseName) => dispatch(actions.deleteCourse(courseName)),
         onAddLesson: (courseName, lessonName) => dispatch(actions.addLesson(courseName, lessonName)),
         onDeleteLesson: (courseName, lessonName) => dispatch(actions.deleteLesson(courseName, lessonName)),
-        onOpenLesson: (block, course, lesson) => dispatch(actions.initBox(block, course, lesson))
+        onOpenLesson: (block, course, lesson) => dispatch(actions.initBox(block, course, lesson)),
+        onPostData: (lessons) => dispatch(actions.postData(lessons)),
+        onInitEdit: (lesson) => dispatch(actions.initEdit(lesson))
     };
 }
 

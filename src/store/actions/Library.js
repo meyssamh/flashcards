@@ -64,3 +64,25 @@ export const deleteLesson = (courseName, lessonName) => {
         lessonName: lessonName
     }
 }
+
+export const postData = (lessons) => {
+    return dispatch => {
+        const Lessons = lessons
+        axios.post('/Lessons', Lessons)
+        .then(response => {
+            console.log('Post Successful', response.status);
+        }
+        ).catch(error => {
+            dispatch(postDataFail(error.message));
+            console.log(error.message);
+        }
+        );
+    }
+}
+
+export const postDataFail = (error) => {
+    return {
+        type: actionTypes.POST_DATA_FAIL,
+        error: error
+    }
+}

@@ -1,7 +1,6 @@
 export {
     nightMode, fetchDataStart, addCourse, deleteCourse,
-    addLesson, deleteLesson
+    addLesson, deleteLesson, postData
 } from './Library';
-export {
-    initBox, 
-} from './Cards';
+export { initBox } from './Cards';
+export { initEdit } from './Edit';
