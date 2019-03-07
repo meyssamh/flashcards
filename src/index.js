@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import thunk from 'redux-thunk';
 
 import App from './App';
@@ -12,13 +12,15 @@ import EditReducer from './store/reducers/EditReducer';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const reducers = combineReducers({
     Library: LibraryReducer,
     Cards: CardsReducer,
     Edit: EditReducer
 });
 
-const store = createStore(reducers, applyMiddleware(thunk));
+const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
 
 const root = (
     <Provider store={store}>

@@ -1,9 +1,0 @@
-.Bottomnav {
-    height: 22vh;
-    width: 100vw;
-    background-color: #ffd8ac;
-    bottom: 0;
-    position: fixed;
-    overflow-x: auto;
-    overflow-y: hidden;
-}

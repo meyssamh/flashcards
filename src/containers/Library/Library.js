@@ -34,7 +34,7 @@ class Library extends Component {
             Text: 'white',
             Menu: '#37474f',
             Delete: '#f50057',
-            Edit: 'white',
+            Edit: 'white'
         },
         Day: {
             Header: '#64b5f6',
@@ -43,7 +43,7 @@ class Library extends Component {
             Text: '#263238',
             Menu: 'white',
             Delete: '#f50057',
-            Edit: '#90a4ae',
+            Edit: '#90a4ae'
         },
         CSetting: false,
         AddCourse: false,
@@ -217,10 +217,10 @@ class Library extends Component {
     }
 
     addLessonHandler = () => {
-        const lessons = { ...this.props.Lessons };
+        const lessons = this.props.Lessons;
         const course = this.state.SelectCourse;
         const lesson = this.state.NewLesson;
-        const LessonsKey = Object.keys({ ...lessons[course] }).map((name) => name);
+        const LessonsKey = Object.keys(lessons[course]).map((name) => name);
         let i = 0;
         do {
             if (LessonsKey[i] === lesson) {
@@ -253,13 +253,10 @@ class Library extends Component {
         });
     }
 
-    openCardHandler = (e) => {
-        const lessons = { ...this.props.Lessons };
-        const lesson = e.currentTarget.name;
-        const course = e.currentTarget.value;
-        const clickedCourse = { ...lessons[course] };
-        const clickedLesson = { ...clickedCourse[lesson] };
-        const cards = { ...clickedLesson.cards };
+    openCardHandler = (course, lesson) => {
+        const lessons = this.props.Lessons;
+        const clickedCourse = lessons[course];
+        const clickedLesson = clickedCourse[lesson];
         const zero = {};
         const one = {};
         const two = {};
@@ -267,9 +264,9 @@ class Library extends Component {
         const four = {};
         const five = {};
         const favorite = {};
-        let Key = Object.keys(cards);
-        for (Key in cards) {
-            const card = { ...cards[Key] };
+        let Key = Object.keys(clickedLesson);
+        for (Key in clickedLesson) {
+            const card = clickedLesson[Key];
             switch (card.box) {
                 case 0: zero[Key] = [card];
                     break;
@@ -318,17 +315,14 @@ class Library extends Component {
     }
 
     editCardHandler = (course, lesson) => {
-        const lessons = { ...this.props.Lessons };
-        const editCourse = { ...lessons[course] };
-        const editLesson = { ...editCourse[lesson] };
-        const editAble = editLesson.cards;
+        const lessons = this.props.Lessons;
+        const editCourse = lessons[course];
+        const editLesson = editCourse[lesson];
         this.props.history.push('/edit');
-        this.props.onInitEdit(editAble);
+        this.props.onInitEdit(editLesson, course, lesson);
     }
 
-    deleteLessonHandler = (e) => {
-        const course = e.currentTarget.value;
-        const lesson = e.currentTarget.name;
+    deleteLessonHandler = (course, lesson) => {
         this.setState({
             DeleteLesson: {
                 show: true,
@@ -414,13 +408,13 @@ class Library extends Component {
     }
 
     openLessonHandler = (e) => {
-        const lessons = { ...this.props.Lessons };
-        const course = { ...lessons[this.state.OpenLesson.course] };
-        const lesson = { ...course[this.state.OpenLesson.title] };
+        const lessons = this.props.Lessons;
+        const course = lessons[this.state.OpenLesson.course];
+        const lesson = course[this.state.OpenLesson.title];
         const number = e.currentTarget.value;
         let selectedBox = {};
-        Object.keys(lesson.cards).map(cards => {
-            let block = lesson.cards[cards];
+        Object.keys(lesson).map(cards => {
+            let block = lesson[cards];
             if (block.box === parseInt(number)) {
                 return selectedBox = { ...selectedBox, [cards]: block };
             } else {
@@ -432,12 +426,12 @@ class Library extends Component {
     }
 
     openFavoriteHandler = () => {
-        const lessons = { ...this.props.Lessons };
-        const course = { ...lessons[this.state.OpenLesson.course] };
-        const lesson = { ...course[this.state.OpenLesson.title] };
+        const lessons = this.props.Lessons;
+        const course = lessons[this.state.OpenLesson.course];
+        const lesson = course[this.state.OpenLesson.title];
         let selectedBox = {};
-        Object.keys(lesson.cards).map(cards => {
-            let block = lesson.cards[cards];
+        Object.keys(lesson).map(cards => {
+            let block = lesson[cards];
             if (block.favorite) {
                 return selectedBox = { ...selectedBox, [cards]: block };
             } else {
@@ -458,7 +452,7 @@ class Library extends Component {
     }
 
     signOutHandler = () => {
-        const lessons = { ...this.props.Lessons };
+        const lessons = this.props.Lessons;
         this.props.onPostData(lessons);
         //Signout method comes here!
     }
@@ -496,7 +490,6 @@ class Library extends Component {
         </div>;
 
         if (this.props.Error.length !== 0) {
-            console.log('oo')
             return err;
         }
 
@@ -521,7 +514,7 @@ class Library extends Component {
         let courseItems = 0;
         let showLesson = this.state.ShowLesson === 'All' ?
             {} :
-            { ...this.props.Lessons[this.state.ShowLesson] };
+            this.props.Lessons[this.state.ShowLesson];
 
         let Card = this.state.ShowLesson === 'All' ? // Filter for showing the lesson cards
             (Object.keys(this.props.Lessons).map(course => {
@@ -529,14 +522,17 @@ class Library extends Component {
                     return Object.keys(name).map((lesson, id) => {
                         courseItems++; // to check if we have a lesson!
                         let everyLesson = name[lesson];
+                        let count = 0;
+                        count = Object.keys(everyLesson).length;
                         // have to use courses to check if there are courses!
                         return (
-                            <Cards clickedOpenCard={this.openCardHandler} key={course + lesson + id}
+                            <Cards clickedOpenCard={() => this.openCardHandler(course, lesson)}
                                 clickedEdit={() => this.editCardHandler(course, lesson)}
-                                clickedDelete={this.deleteLessonHandler} lesson={lesson} course={course}
-                                count={everyLesson.count} text={mode.Text} cardAction={mode.CardAction}
-                                del={mode.Delete} title={`${lesson} - ${course}`} edit={mode.Edit}
-                                name={lesson} value={course} disabled={everyLesson.count === 0}
+                                clickedDelete={() => this.deleteLessonHandler(course, lesson)}
+                                lesson={lesson} course={course} count={count} text={mode.Text}
+                                cardAction={mode.CardAction} del={mode.Delete} title={`${lesson} - ${course}`}
+                                edit={mode.Edit} disabled={count === 0}
+                                key={course + lesson + id}
                             />
                         );
                     });
@@ -544,14 +540,17 @@ class Library extends Component {
             })) :
             (Object.keys(showLesson).map((lesson, id) => {
                 let everyLesson = showLesson[lesson];
+                let count = 0;
+                count = Object.keys(everyLesson).length;
                 courseItems++;
                 return (
-                    <Cards clickedOpenCard={this.openCardHandler} key={lesson + id}
+                    <Cards clickedOpenCard={() => this.openCardHandler(this.state.ShowLesson, lesson)}
                         clickedEdit={() => this.editCardHandler(this.state.ShowLesson, lesson)}
-                        clickedDelete={this.deleteLessonHandler} lesson={lesson}
-                        course={this.state.ShowLesson} count={everyLesson.count} cardAction={mode.CardAction}
-                        text={mode.Text} del={mode.Delete} edit={mode.Edit} disabled={everyLesson.count === 0}
-                        title={`${lesson} - ${this.state.ShowLesson}`}
+                        clickedDelete={() => this.deleteLessonHandler(this.state.ShowLesson, lesson)}
+                        lesson={lesson} course={this.state.ShowLesson} count={count}
+                        cardAction={mode.CardAction} text={mode.Text} del={mode.Delete} edit={mode.Edit}
+                        disabled={count === 0} title={`${lesson} - ${this.state.ShowLesson}`}
+                        key={lesson + id}
                     />
                 );
             }));
@@ -641,7 +640,6 @@ class Library extends Component {
                     </div>
                 </main>
             </Fragment>;
-
         return (
             content
         );
@@ -662,13 +660,13 @@ const mapDispatchToProps = dispatch => {
     return {
         onNightMode: () => dispatch(actions.nightMode()),
         onFetchDataStart: () => dispatch(actions.fetchDataStart()),
-        onAddCourse: (courseName) => dispatch(actions.addCourse(courseName)),
-        onDeleteCourse: (courseName) => dispatch(actions.deleteCourse(courseName)),
-        onAddLesson: (courseName, lessonName) => dispatch(actions.addLesson(courseName, lessonName)),
-        onDeleteLesson: (courseName, lessonName) => dispatch(actions.deleteLesson(courseName, lessonName)),
+        onAddCourse: (course) => dispatch(actions.addCourse(course)),
+        onDeleteCourse: (course) => dispatch(actions.deleteCourse(course)),
+        onAddLesson: (course, lesson) => dispatch(actions.addLesson(course, lesson)),
+        onDeleteLesson: (course, lesson) => dispatch(actions.deleteLesson(course, lesson)),
         onOpenLesson: (block, course, lesson) => dispatch(actions.initBox(block, course, lesson)),
         onPostData: (lessons) => dispatch(actions.postData(lessons)),
-        onInitEdit: (lesson) => dispatch(actions.initEdit(lesson))
+        onInitEdit: (lesson, course, lessonName) => dispatch(actions.initEdit(lesson, course, lessonName))
     };
 }
 

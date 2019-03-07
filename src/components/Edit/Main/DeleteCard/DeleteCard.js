@@ -3,23 +3,21 @@ import {
     Dialog, DialogContent, DialogActions, DialogTitle, Button
 } from '@material-ui/core';
 
-const deleteLesson = (props) => {
+const deleteCard = (props) => {
     return (
-        <Dialog
-            open={props.openDeleteLesson} onClose={props.closeDeleteLesson}
-        >
-            <DialogTitle>Delete Lesson</DialogTitle>
+        <Dialog open={props.open} onClose={props.close}>
+            <DialogTitle>Delete Card</DialogTitle>
             <DialogContent>
-                Are you sure you want to delete this lesson? You won't be able to revert this!
+                Are you sure you want to delete this card? You won't be able to revert this!
             </DialogContent>
             <DialogActions>
                 <Button onClick={props.clickedDelete} color={'secondary'}>
                     Yes
                 </Button>
-                <Button onClick={props.closeDeleteLesson}>No</Button>
+                <Button onClick={props.close}>No</Button>
             </DialogActions>
         </Dialog>
     );
 }
 
-export default deleteLesson;
+export default deleteCard;

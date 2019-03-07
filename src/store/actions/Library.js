@@ -35,41 +35,56 @@ export const fetchDataStart = () => {
     }
 }
 
-export const addCourse = (courseName) => {
+export const addCourse = (course) => {
     return {
         type: actionTypes.ADD_COURSE,
-        courseName: courseName
+        course: course
     }
 }
 
-export const deleteCourse = (courseName) => {
+export const deleteCourse = (course) => {
     return {
         type: actionTypes.DELETE_COURSE,
-        courseName: courseName
+        course: course
     }
 }
 
-export const addLesson = (courseName, lessonName) => {
+export const addLesson = (course, lesson) => {
     return {
         type: actionTypes.ADD_LESSON,
-        courseName: courseName,
-        lessonName: lessonName
+        course: course,
+        lesson: lesson
     }
 }
 
-export const deleteLesson = (courseName, lessonName) => {
+export const deleteLesson = (course, lesson) => {
     return {
         type: actionTypes.DELETE_LESSON,
-        courseName: courseName,
-        lessonName: lessonName
+        course: course,
+        lesson: lesson
+    }
+}
+
+export const postDataSuccess = (lessons) => {
+    return {
+        type: actionTypes.POST_DATA_SUCCESS,
+        lessons: lessons
+    }
+}
+
+export const postDataFail = (error) => {
+    return {
+        type: actionTypes.POST_DATA_FAIL,
+        error: error
     }
 }
 
 export const postData = (lessons) => {
     return dispatch => {
-        const Lessons = lessons
+        const Lessons = lessons;
         axios.post('/Lessons', Lessons)
         .then(response => {
+            dispatch(postDataSuccess(lessons));
             console.log('Post Successful', response.status);
         }
         ).catch(error => {
@@ -80,9 +95,12 @@ export const postData = (lessons) => {
     }
 }
 
-export const postDataFail = (error) => {
+export const addEdit = (course, lessonName, question, answer) => {
     return {
-        type: actionTypes.POST_DATA_FAIL,
-        error: error
+        type: actionTypes.ADD_EDIT,
+        course: course,
+        lessonName: lessonName,
+        question: question,
+        answer: answer
     }
 }

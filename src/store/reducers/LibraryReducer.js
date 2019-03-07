@@ -7,10 +7,41 @@ const initialState = {
     Error: ''
 };
 
+const addEdit = (state, action) => {
+    const lessons = state.Lessons;
+    const course = action.course;
+    const lessonName = action.lessonName;
+    const myCourse = lessons[course];
+    const myLesson = myCourse[lessonName];
+    let count = Object.keys(myLesson).length;
+    let number = Object.keys(myLesson);
+    let index = parseInt(number[count - 1]);
+    index++;
+    const question = action.question;
+    const answer = action.answer;
+    const newLesson = {
+        ...myLesson,
+        [index]: {
+            box: 0,
+            type: 0,
+            favorite: false,
+            question: question,
+            answer: answer,
+            picture: ''
+        }
+    };
+    myCourse[lessonName] = newLesson;
+    lessons[course] = myCourse;
+    return {
+        ...state,
+        Lessons: lessons
+    }
+}
+
 const reducer = (state = initialState, action) => {
-    const lessons = { ...state.Lessons };
-    const course = action.courseName;
-    const lesson = action.lessonName;
+    const lessons = state.Lessons;
+    const course = action.course;
+    const lesson = action.lesson;
     switch (action.type) {
         case actionTypes.NIGHT_MODE:
             return {
@@ -32,6 +63,12 @@ const reducer = (state = initialState, action) => {
         case actionTypes.POST_DATA:
             return {
                 ...state
+            }
+        case actionTypes.POST_DATA_SUCCESS:
+            return {
+                ...state,
+                Lessons: action.lessons,
+                Error: ''
             }
         case actionTypes.POST_DATA_FAIL:
             return {
@@ -65,13 +102,14 @@ const reducer = (state = initialState, action) => {
                 Lessons: lessons
             };
         case actionTypes.DELETE_LESSON:
-            const new_Lessons = { ...lessons[course] };
+            const new_Lessons = lessons[course];
             delete new_Lessons[lesson];
             lessons[course] = new_Lessons;
             return {
                 ...state,
                 Lessons: lessons
             };
+        case actionTypes.ADD_EDIT: return addEdit(state, action);
         default:
             return state;
     }

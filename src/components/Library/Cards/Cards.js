@@ -35,7 +35,7 @@ function cards(props) {
         clickedDelete, cardAction, text, del, edit, name, value, title, ...other } = props;
     return (
         <Grid item xs={12} sm={6} md={4} lg={4} xl={3}>
-            <Card className={classes.card} style={{ border: 'green' }} {...other}>
+            <Card className={classes.card} {...other}>
                 <CardActionArea onClick={clickedOpenCard} style={{ background: cardAction }}
                     name={name} value={value} disabled={disabled} title={title}
                 >

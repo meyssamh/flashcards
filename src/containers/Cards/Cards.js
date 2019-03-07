@@ -10,134 +10,27 @@ import * as actions from '../../store/actions/index';
 
 class Cards extends Component {
     state = {
-        Boxes: [],
         Night: {
-            Header: '#263238',
+            Close: 'white',
             Main: '#455a64',
-            CardAction: '#263238',
+            Card: '#263238',
             Text: 'white',
-            Menu: '#37474f',
-            Delete: '#f50057',
-            Edit: 'white',
+            NightButton: '#263238'
         },
         Day: {
-            Header: '#64b5f6',
+            Close: '#263238',
             Main: 'white',
-            CardAction: '#fffde7',
+            Card: '#fffde7',
             Text: '#263238',
-            Menu: 'white',
-            Delete: '#f50057',
-            Edit: '#90a4ae',
+            NightButton: 'gold'
         },
-        Icon: 'star_border_icon',
-        Questions: [],
-        Question: '',
-        Answers: [],
-        Answer: '',
-        Favorites: [],
-        Favorite: false,
-        Empty: false,
-        AnswerOpen: false,
-        Course: '',
-        Lesson: '',
-        Counter: 0,
-        Ids: [],
-        Block: {}
-    }
-
-    componentDidMount() {
-        const block = this.props.Block;
-        if (block === null) {
-            return <Redirect to={'/'} />
-        }
-        const course = this.props.Course;
-        const lesson = this.props.Lesson;
-        let ids = [];
-        let questions = [];
-        let answers = [];
-        let favorites = [];
-        let boxes = [];
-        Object.keys(block).map(id => {
-            let card = block[parseInt(id)];
-            return (
-                ids.push(parseInt(id))
-                &
-                boxes.push(card.box)
-                &
-                questions.push(card.question)
-                &
-                answers.push(card.answer)
-                &
-                favorites.push(card.favorite)
-            )
-        });
-        if (favorites[0]) {
-            this.setState({
-                Boxes: boxes,
-                Block: block,
-                Course: course,
-                Lesson: lesson,
-                Ids: ids,
-                Icon: 'star_icon',
-                Questions: questions,
-                Answers: answers,
-                Favorites: favorites,
-                Favorite: favorites[0],
-                Question: questions[0],
-                Answer: answers[0]
-            });
-        } else {
-            this.setState({
-                Block: block,
-                Course: course,
-                Lesson: lesson,
-                Ids: ids,
-                Icon: 'star_border_icon',
-                Questions: questions,
-                Answers: answers,
-                Favorites: favorites,
-                Favorite: favorites[0],
-                Question: questions[0],
-                Answer: answers[0]
-            });
-        }
-
-    }
-
-    // Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem optio ullam fugiat natus recusandae voluptatum repellat odit esse obcaecati, eos minus placeat dicta provident ea distinctio officiis est inventore dolores.
-
-    favoriteClickHandler = () => {
-        const counter = this.state.Counter;
-        const ids = this.state.Ids;
-        const block = this.state.Block;
-        const favorites = this.state.Favorites;
-        let favorite = this.state.Favorite;
-        const cardNumber = ids[counter];
-        const card = block[cardNumber];
-        card.favorite = !card.favorite;
-        block[cardNumber] = card;
-        favorites[counter] = !favorites[counter];
-        favorite = !favorite;
-        favorite ?
-            this.setState({
-                Icon: 'star_icon',
-                Favorites: favorites,
-                Favorite: favorite,
-                Block: block
-            }) :
-            this.setState({
-                Icon: 'star_border_icon',
-                Favorites: favorites,
-                Favorite: favorite,
-                Block: block
-            });
+        AnswerOpen: false
     }
 
     closePageHandler = () => {
         const lessons = this.props.Lessons;
-        console.log('closed')
-        this.props.history.push('/');
-        this.props.onPostData(lessons)
+        this.props.history.push('/library');
+        this.props.onPostData(lessons);
     }
 
     answerHandler = () => {
@@ -153,154 +46,24 @@ class Cards extends Component {
     }
 
     falseAnswerHandler = () => {
-        let counter = this.state.Counter;
-        const ids = this.state.Ids;
-        const block = this.state.Block;
-        const cardNumber = ids[counter];
-        const card = block[cardNumber];
-        card.box = 1; // placing the card in the first box
-        block[cardNumber] = card;
-        const favorites = this.state.Favorites;
-        let favorite = this.state.Favorite;
-        const questions = this.state.Questions;
-        const answers = this.state.Answers;
-        counter++;
-        favorite = favorites[counter];
-        if (counter < questions.length && favorite) {
-            this.setState({
-                Icon: 'star_icon',
-                Favorite: favorite,
-                AnswerOpen: false,
-                Question: questions[counter],
-                Counter: counter,
-                Block: block
-            });
-            setTimeout(() => {
-                this.setState({
-                    Answer: answers[counter]
-                });
-            }, 350);
-        } else if (counter < questions.length) {
-            this.setState({
-                Icon: 'star_border_icon',
-                Favorite: favorite,
-                AnswerOpen: false,
-                Question: questions[counter],
-                Counter: counter,
-                Block: block
-            });
-            setTimeout(() => {
-                this.setState({
-                    Answer: answers[counter]
-                });
-            }, 350);
-        } else {
-            this.setState({
-                Empty: true
-            });
-        }
+        this.setState({
+            AnswerOpen: false
+        });
+        this.props.onFalseAnswer();
     }
 
     trueAnswerHandler = () => {
-        let counter = this.state.Counter;
-        const ids = this.state.Ids;
-        const block = this.state.Block;
-        const cardNumber = ids[counter];
-        const card = block[cardNumber];
-        if (card.box < 5) { // not letting cards go farther than last box
-            card.box++;
-        } else {
-            card.box = 5;
-        }
-        block[cardNumber] = card;
-        const favorites = this.state.Favorites;
-        let favorite = this.state.Favorite;
-        const questions = this.state.Questions;
-        const answers = this.state.Answers;
-        counter++;
-        favorite = favorites[counter];
-        if (counter < questions.length && favorite) {
-            this.setState({
-                Icon: 'star_icon',
-                Favorite: favorite,
-                AnswerOpen: false,
-                Question: questions[counter],
-                Counter: counter,
-                Block: block
-            });
-            setTimeout(() => {
-                this.setState({
-                    Answer: answers[counter]
-                });
-            }, 350);
-        } else if (counter < questions.length) {
-            this.setState({
-                Icon: 'star_border_icon',
-                Favorite: favorite,
-                AnswerOpen: false,
-                Question: questions[counter],
-                Counter: counter,
-                Block: block
-            });
-            setTimeout(() => {
-                this.setState({
-                    Answer: answers[counter]
-                });
-            }, 350);
-        } else {
-            this.setState({
-                Empty: true
-            });
-        }
+        this.setState({
+            AnswerOpen: false
+        });
+        this.props.onTrueAnswer();
     }
 
     box0AnswerHandler = () => {
-        let counter = this.state.Counter;
-        const ids = this.state.Ids;
-        const block = this.state.Block;
-        const cardNumber = ids[counter];
-        const card = block[cardNumber];
-        card.box = 1; // placing the card in the first box
-        block[cardNumber] = card;
-        const favorites = this.state.Favorites;
-        let favorite = this.state.Favorite;
-        const questions = this.state.Questions;
-        const answers = this.state.Answers;
-        counter++;
-        favorite = favorites[counter];
-        if (counter < questions.length && favorite) {
-            this.setState({
-                Icon: 'star_icon',
-                Favorite: favorite,
-                AnswerOpen: false,
-                Question: questions[counter],
-                Counter: counter,
-                Block: block
-            });
-            setTimeout(() => {
-                this.setState({
-                    Answer: answers[counter]
-                });
-            }, 350);
-        } else if (counter < questions.length) {
-            this.setState({
-                Icon: 'star_border_icon',
-                Favorite: favorite,
-                AnswerOpen: false,
-                Question: questions[counter],
-                Counter: counter,
-                Block: block
-            });
-            setTimeout(() => {
-                this.setState({
-                    Answer: answers[counter]
-                });
-            }, 350);
-        } else {
-            this.setState({
-                Empty: true
-            });
-        }
+        this.setState({
+            AnswerOpen: false
+        });
+        this.props.onBox0Answer();
     }
 
     render() {
@@ -309,36 +72,47 @@ class Cards extends Component {
             return <Redirect to={'/'} />
         }
 
-        const boxes = this.state.Boxes;
+        const icon = this.props.Favorite ? 'star_icon' : 'star_border_icon';
 
-        const counter = this.state.Counter;
+        const nightIcon = this.props.NightMode ? 'brightness_3_icon' : 'wb_sunny_icon';
 
-        // let nightMode = this.props.NightMode; // to check for the night mode
+        const boxes = this.props.Boxes;
 
-        // let day = this.state.Day;
+        const counter = this.props.Counter;
 
-        // let night = this.state.Night;
+        const question = this.props.Question;
 
-        // let mode = nightMode ? night : day;
+        const answer = this.props.Answer;
 
-        let empty = this.state.Empty; // to show message after all cards are done
+        let nightMode = this.props.NightMode; // to check for the night mode
+
+        let day = this.state.Day;
+
+        let night = this.state.Night;
+
+        let mode = nightMode ? night : day;
+
+        let empty = this.props.Empty; // to show message after all cards are done
 
         let content = empty === false ?
             <Fragment>
-                <Question clickedFav={this.favoriteClickHandler} childrenFav={this.state.Icon}
-                    clickedClose={this.closePageHandler} content={this.state.Question}
-                    clickedAnswer={this.answerHandler}
+                <Question clickedFav={this.props.onFavorite} childrenFav={icon} card={mode.Card}
+                    clickedClose={this.closePageHandler} content={question} text={mode.Text}
+                    clickedAnswer={this.answerHandler} nightOrDay={nightIcon} button={mode.NightButton}
+                    clickedNight={this.props.onNightMode} main={mode.Main} close={mode.Close}
                 />
                 {boxes[counter] === 0 ?
                     <Answer0 openAnswer={this.state.AnswerOpen} closeAnswer={this.closeAnswerHandler}
-                        clicked={this.box0AnswerHandler} answer={this.state.Answer}
+                        clicked={this.box0AnswerHandler} answer={answer}
                     /> :
                     <Answer openAnswer={this.state.AnswerOpen} closeAnswer={this.closeAnswerHandler}
                         clickedFalse={this.falseAnswerHandler} clickedTrue={this.trueAnswerHandler}
-                        answer={this.state.Answer}
+                        answer={answer}
                     />}
             </Fragment> :
-            <Empty clickedClose={this.closePageHandler} />;
+            <Empty clickedClose={this.closePageHandler} main={mode.Main} text={mode.Text}
+                    close={mode.Close}
+            />;
 
         return (
             content
@@ -352,13 +126,25 @@ const mapStateToProps = state => {
         Block: state.Cards.Block,
         Course: state.Cards.Course,
         Lesson: state.Cards.Lesson,
+        Boxes: state.Cards.Boxes,
+        Question: state.Cards.Question,
+        Answer: state.Cards.Answer,
+        Counter: state.Cards.Counter,
+        Favorite: state.Cards.Favorite,
+        Ids: state.Cards.Ids,
+        Empty: state.Cards.Empty,
         NightMode: state.Library.NightMode
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onPostData: (lessons) => dispatch(actions.postData(lessons))
+        onNightMode: () => dispatch(actions.nightMode()),
+        onPostData: (lessons) => dispatch(actions.postData(lessons)),
+        onTrueAnswer: () => dispatch(actions.trueAnswer()),
+        onFalseAnswer: () => dispatch(actions.falseAnswer()),
+        onBox0Answer: () => dispatch(actions.box0Answer()),
+        onFavorite: () => dispatch(actions.favorite())
     }
 }
 

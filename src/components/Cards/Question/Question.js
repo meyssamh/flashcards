@@ -1,14 +1,24 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Card, CardContent, Divider, CardActions, IconButton, Button, Icon } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 
 const styles = {
+    main: {
+        width: '100%',
+        height: '100%',
+        position: 'absolute'
+    },
     icon: {
         color: 'gold',
         position: 'absolute',
         top: 10,
         left: 10
+    },
+    nightIcon: {
+        position: 'absolute',
+        top: 10,
+        left: 68
     },
     closeButton: {
         position: 'absolute',
@@ -27,25 +37,37 @@ const styles = {
 }
 
 const question = (props) => {
-    const { classes, clickedFav, childrenFav, clickedClose, content, clickedAnswer } = props;
+    const {
+        classes, clickedFav, childrenFav, nightOrDay, clickedClose, content,
+        clickedAnswer, clickedNight, main, card, text, button, close
+    } = props;
     return (
-        <Fragment>
-            <IconButton className={classes.icon} onClick={clickedFav}>
+        <main style={{ backgroundColor: main }} className={classes.main}>
+            <IconButton className={classes.icon} onClick={clickedFav} title={'Favorite'}>
                 <Icon>{childrenFav}</Icon>
             </IconButton>
-            <IconButton className={classes.closeButton} onClick={clickedClose}>
+            <IconButton className={classes.nightIcon} onClick={clickedNight} title={'Night Mode'}
+                style={{ color: button }}
+            >
+                <Icon>{nightOrDay}</Icon>
+            </IconButton>
+            <IconButton className={classes.closeButton} onClick={clickedClose} title={'Close'}
+                style={{ color: close }}
+            >
                 <CloseIcon />
             </IconButton>
-            <Card className={classes.card}>
+            <Card className={classes.card} style={{ background: card, color: text }}>
                 <CardContent>
-                   {content}
+                    {content}
                 </CardContent>
-                <Divider variant={'middle'} />
+                <Divider />
                 <CardActions>
-                    <Button className={classes.button} onClick={clickedAnswer}>Answer</Button>
+                    <Button className={classes.button} onClick={clickedAnswer} style={{ color: text }}>
+                        Answer
+                    </Button>
                 </CardActions>
             </Card>
-        </Fragment>
+        </main>
     );
 }
 

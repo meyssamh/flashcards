@@ -2,200 +2,170 @@
   "Lessons": {
     "IT": {
       "Java": {
-        "count": 10,
-        "cards": {
-          "1": {
-            "box": 0,
-            "type": 0,
-            "favorite": true,
-            "question": "Lorem kura?",
-            "answer": "Lorem hurra!",
-            "picture": ""
-          },
-          "2": {
-            "box": 5,
-            "type": 0,
-            "favorite": false,
-            "question": "Lorem?",
-            "answer": "Lorem!",
-            "picture": ""
-          },
-          "3": {
-            "box": 1,
-            "type": 0,
-            "favorite": true,
-            "question": "Lorem?",
-            "answer": "Lorem!",
-            "picture": ""
-          },
-          "4": {
-            "box": 1,
-            "type": 0,
-            "favorite": true,
-            "question": "Lorem lollita?",
-            "answer": "Lorem!",
-            "picture": ""
-          },
-          "5": {
-            "box": 1,
-            "type": 0,
-            "favorite": false,
-            "question": "Lorem korridas?",
-            "answer": "Lorem!",
-            "picture": ""
-          },
-          "6": {
-            "box": 4,
-            "type": 0,
-            "favorite": false,
-            "question": "Lorem?",
-            "answer": "Lorem!",
-            "picture": ""
-          },
-          "7": {
-            "box": 2,
-            "type": 0,
-            "favorite": false,
-            "question": "Lorem?",
-            "answer": "Lorem!",
-            "picture": ""
-          },
-          "8": {
-            "box": 1,
-            "type": 0,
-            "favorite": false,
-            "question": "Lorem?",
-            "answer": "Lorem!",
-            "picture": ""
-          },
-          "9": {
-            "box": 1,
-            "type": 0,
-            "favorite": true,
-            "question": "Lorem?",
-            "answer": "Lorem!",
-            "picture": ""
-          },
-          "10": {
-            "box": 0,
-            "type": 0,
-            "favorite": false,
-            "question": "Lorem passum?",
-            "answer": "Lorem dorita!",
-            "picture": ""
-          }
+        "2": {
+          "box": 5,
+          "type": 0,
+          "favorite": false,
+          "question": "Lorem?",
+          "answer": "Lorem!",
+          "picture": ""
+        },
+        "3": {
+          "box": 2,
+          "type": 0,
+          "favorite": true,
+          "question": "Lorem?",
+          "answer": "Lorem!",
+          "picture": ""
+        },
+        "4": {
+          "box": 2,
+          "type": 0,
+          "favorite": true,
+          "question": "Lorem lollita?",
+          "answer": "Lorem!",
+          "picture": ""
+        },
+        "5": {
+          "box": 1,
+          "type": 0,
+          "favorite": false,
+          "question": "Lorem korridas?",
+          "answer": "Lorem!",
+          "picture": ""
+        },
+        "6": {
+          "box": 4,
+          "type": 0,
+          "favorite": false,
+          "question": "Lorem?",
+          "answer": "Lorem!",
+          "picture": ""
+        },
+        "7": {
+          "box": 1,
+          "type": 0,
+          "favorite": false,
+          "question": "Lorem?",
+          "answer": "Lorem!",
+          "picture": ""
+        },
+        "8": {
+          "box": 1,
+          "type": 0,
+          "favorite": false,
+          "question": "Lorem?",
+          "answer": "Lorem!",
+          "picture": ""
+        },
+        "9": {
+          "box": 1,
+          "type": 0,
+          "favorite": true,
+          "question": "Lorem?",
+          "answer": "Lorem!",
+          "picture": ""
+        },
+        "10": {
+          "box": 0,
+          "type": 0,
+          "favorite": false,
+          "question": "Lorem passum?",
+          "answer": "Lorem dorita!",
+          "picture": ""
+        },
+        "11": {
+          "box": 0,
+          "type": 0,
+          "favorite": false,
+          "question": "k",
+          "answer": "",
+          "picture": ""
         }
       },
       "JavaScript": {
-        "count": 1,
-        "cards": {
-          "1": {
-            "box": 0,
-            "type": 0,
-            "favorite": false,
-            "question": "",
-            "answer": "",
-            "picture": ""
-          }
+        "1": {
+          "box": 0,
+          "type": 0,
+          "favorite": false,
+          "question": "",
+          "answer": "",
+          "picture": ""
         }
       },
       "C++": {
-        "count": 1,
-        "cards": {
-          "1": {
-            "box": 0,
-            "type": 0,
-            "favorite": false,
-            "question": "",
-            "answer": "",
-            "picture": ""
-          }
+        "1": {
+          "box": 0,
+          "type": 0,
+          "favorite": false,
+          "question": "",
+          "answer": "",
+          "picture": ""
         }
       }
     },
     "BWL": {
       "Marketing": {
-        "count": 1,
-        "cards": {
-          "1": {
-            "box": 0,
-            "type": 0,
-            "favorite": false,
-            "question": "",
-            "answer": "",
-            "picture": ""
-          }
+        "1": {
+          "box": 0,
+          "type": 0,
+          "favorite": false,
+          "question": "",
+          "answer": "",
+          "picture": ""
         }
       },
       "Steuerlehre": {
-        "count": 1,
-        "cards": {
-          "1": {
-            "box": 0,
-            "type": 0,
-            "favorite": false,
-            "question": "",
-            "answer": "",
-            "picture": ""
-          }
+        "1": {
+          "box": 0,
+          "type": 0,
+          "favorite": false,
+          "question": "",
+          "answer": "",
+          "picture": ""
         }
       },
       "BWL": {
-        "count": 1,
-        "cards": {
-          "1": {
-            "box": 0,
-            "type": 0,
-            "favorite": false,
-            "question": "",
-            "answer": "",
-            "picture": ""
-          }
+        "1": {
+          "box": 0,
+          "type": 0,
+          "favorite": false,
+          "question": "",
+          "answer": "",
+          "picture": ""
         }
       },
-      "hi": {
-        "count": 0,
-        "cards": {}
-      }
+      "hi": {}
     },
     "VWL": {
       "Makro 1": {
-        "count": 1,
-        "cards": {
-          "1": {
-            "box": 0,
-            "type": 0,
-            "favorite": false,
-            "question": "",
-            "answer": "",
-            "picture": ""
-          }
+        "1": {
+          "box": 0,
+          "type": 0,
+          "favorite": false,
+          "question": "",
+          "answer": "",
+          "picture": ""
         }
       },
       "Makro 2": {
-        "count": 1,
-        "cards": {
-          "1": {
-            "box": 0,
-            "type": 0,
-            "favorite": false,
-            "question": "",
-            "answer": "",
-            "picture": ""
-          }
+        "1": {
+          "box": 0,
+          "type": 0,
+          "favorite": false,
+          "question": "",
+          "answer": "",
+          "picture": ""
         }
       },
       "VWL": {
-        "count": 1,
-        "cards": {
-          "1": {
-            "box": 0,
-            "type": 0,
-            "favorite": false,
-            "question": "",
-            "answer": "",
-            "picture": ""
-          }
+        "1": {
+          "box": 0,
+          "type": 0,
+          "favorite": false,
+          "question": "",
+          "answer": "",
+          "picture": ""
         }
       }
     }
